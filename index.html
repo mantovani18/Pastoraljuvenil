@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pastoral Juvenil de Rolândia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="images/PastoralJuvenil.jpg" alt="Logo Pastoral Juvenil" class="brand-symbol">
+      <div>
+        <h1>Pastoral Juvenil de Rolândia</h1>
+        <p class="tagline">Acolhendo jovens — fé, encontro e missão</p>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <button data-target="home" class="nav-link active">Início</button>
+      <button data-target="yeshua" class="nav-link">Yeshua</button>
+      <button data-target="dom" class="nav-link">Dom</button>
+      <button data-target="calendar" class="nav-link">Calendário</button>
+      <button data-target="gallery" class="nav-link">Galeria</button>
+      <button data-target="contact" class="nav-link">Contato</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page active">
+      <h2>Bem-vindo à Pastoral Juvenil de Rolândia</h2>
+      <p>A Pastoral Juvenil reúne grupos de jovens que vivem a fé com alegria e serviço. Conheça nossos grupos e programe-se para os próximos encontros.</p>
+
+      <!-- Fotos dos grupos serão exibidas dentro dos cards abaixo -->
+
+      <div class="cards">
+        <article class="card yeshua">
+          <h3>Yeshua</h3>
+          <p>Grupo de jovens (menores e maiores) com foco em espiritualidade, louvor e missão.</p>
+          <p><strong>Encontros:</strong> Todo sábado às 18:00</p>
+          <a href="#" class="btn" data-target="yeshua">Saber mais</a>
+          </article>
+
+        <article class="card dom">
+          <h3>Dom</h3>
+          <p>Grupo para jovens maiores de 18 anos, com integração após a missa dominical.</p>
+          <p><strong>Encontros:</strong> Domingo às 20:00</p>
+          <a href="#" class="btn" data-target="dom">Saber mais</a>
+          </article>
+
+        <article class="card events">
+    <h3>Próximos eventos da Pastoral Juvenil</h3>
+    <ul id="upcoming-events" class="event-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="yeshua" class="page">
+      <div class="section-header yeshua">
+        <img src="images/GrupoYeshua.png" alt="Leão Yeshua" class="group-symbol">
+        <div>
+          <h2>Yeshua</h2>
+         
+        </div>
+      </div>
+
+      <div class="content">
+        <h3>Sobre o grupo</h3>
+        <p>Yeshua é um espaço de acolhimento, formação e oração para os jovens. Promovemos encontros semanais, retiros, formações e ações sociais.</p>
+
+        <h4>Horário de encontro</h4>
+        <p>Todo sábado às <strong>18:00</strong>.</p>
+
+        <h4>Próximos encontros</h4>
+        <ul id="yeshua-events" class="event-list"></ul>
+
+        <h4>Galeria de encontros</h4>
+        <div class="gallery" id="gallery-yeshua">
+          <figure class="gallery-item" data-group="yeshua">
+            <img src="images/fto1Yeshua.jpg" alt="Encontro Yeshua 1" data-full="images/fto1Yeshua.jpg">
+            <figcaption class="badge">Yeshua</figcaption>
+          </figure>
+          <figure class="gallery-item" data-group="yeshua">
+            <img src="images/foto2Yeshua.jpg" alt="Encontro Yeshua 2" data-full="images/foto2Yeshua.jpg">
+            <figcaption class="badge">Yeshua</figcaption>
+          </figure>
+        </div>
+
+        
+      </div>
+    </section>
+
+    <section id="dom" class="page">
+      <div class="section-header dom">
+        <img src="images/GrupoDom.jpg" alt="Logo Dom" class="group-symbol">
+        <div>
+          <h2>Dom</h2>
+         
+        </div>
+      </div>
+
+      <div class="content">
+        <h3>Sobre o grupo</h3>
+        <p>Dom é um espaço de maturidade na fé para jovens adultos. Partilhamos experiências de vida, voluntariado, e formação humana e cristã.</p>
+
+        <h4>Horário de encontro</h4>
+        <p>Domingo às <strong>20:00</strong> (após a missa).</p>
+
+        <h4>Próximos encontros</h4>
+        <ul id="dom-events" class="event-list"></ul>
+
+        <h4>Galeria de encontros</h4>
+        <div class="gallery" id="gallery-dom">
+          <figure class="gallery-item" data-group="dom">
+            <img src="images/foto1Dom.jpg" alt="Encontro Dom 1" data-full="images/foto1Dom.jpg">
+            <figcaption class="badge">Dom</figcaption>
+          </figure>
+          <figure class="gallery-item" data-group="dom">
+            <img src="images/foto2Dom.jpg" alt="Encontro Dom 2" data-full="images/foto2Dom.jpg">
+            <figcaption class="badge">Dom</figcaption>
+          </figure>
+        </div>
+
+      
+      </div>
+    </section>
+
+    <section id="calendar" class="page">
+      <h2>Calendário</h2>
+      <p>Próximas programações dos grupos — datas e horários.</p>
+      <div class="calendar-events-wrapper">
+        <h3>Próximos eventos (visual)</h3>
+        <div id="calendar-events" class="calendar-events-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="page">
+      <h2>Galeria</h2>
+      <p>Fotos de encontros passados. Clique para ampliar.</p>
+      <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="yeshua">Yeshua</button>
+        <button class="filter-btn" data-filter="dom">Dom</button>
+        <button class="filter-btn" data-filter="pastoral">Pastoral</button>
+      </div>
+      <div class="gallery" id="gallery-all">
+        <figure class="gallery-item" data-group="yeshua">
+          <img src="images/fto1Yeshua.jpg" alt="Yeshua 1" data-full="images/fto1Yeshua.jpg">
+          <figcaption class="badge">Yeshua</figcaption>
+        </figure>
+        <figure class="gallery-item" data-group="yeshua">
+          <img src="images/foto2Yeshua.jpg" alt="Yeshua 2" data-full="images/foto2Yeshua.jpg">
+          <figcaption class="badge">Yeshua</figcaption>
+        </figure>
+        <figure class="gallery-item" data-group="dom">
+          <img src="images/foto1Dom.jpg" alt="Dom 1" data-full="images/foto1Dom.jpg">
+          <figcaption class="badge">Dom</figcaption>
+        </figure>
+        <figure class="gallery-item" data-group="dom">
+          <img src="images/foto2Dom.jpg" alt="Dom 2" data-full="images/foto2Dom.jpg">
+          <figcaption class="badge">Dom</figcaption>
+        </figure>
+        <figure class="gallery-item" data-group="pastoral">
+          <img src="images/foto1Pastoral.jpg" alt="Pastoral 1" data-full="images/foto1Pastoral.jpg">
+          <figcaption class="badge">Pastoral</figcaption>
+        </figure>
+        <figure class="gallery-item" data-group="pastoral">
+          <img src="images/foto2Pastoral.jpg" alt="Pastoral 2" data-full="images/foto2Pastoral.jpg">
+          <figcaption class="badge">Pastoral</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="contact" class="page">
+      <h2>Contato</h2>
+      <p>Quer saber mais ou fazer parte? Entre em contato com a equipe da Pastoral Juvenil de Rolândia.</p>
+      <ul>
+        <li>Email fictício: pastoral.juvenil@rolandia.example</li>
+        <li>Telefone: (XX) XXXX-XXXX</li>
+        <li>Instagram: @pastoraljuvenil_rolandia</li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <button id="lb-close" class="lb-close" aria-label="Fechar">✕</button>
+    <img id="lb-image" src="images/foto2Yeshua.jpg" alt="Imagem ampliada">
+  </div>
+
+  <!-- Event modal -->
+  <div id="event-modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
+      <h3 id="modal-title"></h3>
+      <p id="modal-date"></p>
+
+      <!-- Mini gráfico RSVP -->
+      <div id="modal-chart" class="rsvp-chart" aria-hidden="true">
+        <div class="bar yes">
+          <span class="label">Vão</span>
+          <div class="fill" style="width:0%"></div>
+          <span class="count">0</span>
+        </div>
+        <div class="bar no">
+          <span class="label">Não vão</span>
+          <div class="fill" style="width:0%"></div>
+          <span class="count">0</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="modal-rsvp" class="btn">Marcar presença</button>
+        <button id="modal-rsvp-no" class="btn alt">Não vou</button>
+        <button id="modal-ics" class="btn">Adicionar ao calendário</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>© Pastoral Juvenil de Rolândia</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
