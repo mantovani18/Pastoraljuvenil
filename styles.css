@@ -5,6 +5,7 @@
   --text:#111111;
   --primary-pastoral:#1272aa; /* amarelo/dourado */
   --primary-dark:#0B2A40; /* marinho escuro */
+  --sidebar-width:280px;
   --accent-yeshua:#ff7a00; /* laranja do Yeshua */
   --accent-dom:#23a85c; /* verde do Dom */
   --black:#111111;
@@ -12,9 +13,10 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Segoe UI, Roboto, Arial, sans-serif;color:var(--text);background:var(--bg)}
-.site-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:4px solid #eee}
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:4px solid #00054db0}
 .brand{display:flex;gap:12px;align-items:center}
-.brand-symbol{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;background:#fff;overflow:hidden;border:2px solid rgba(11,42,64,0.06)}
+/* Brand/logo size — increased for better visibility */
+.brand-symbol{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;background:#fff;overflow:hidden;border:2px solid rgba(11,42,64,0.06)}
 .site-header h1{margin:0;font-size:1.1rem}
 .tagline{margin:0;font-size:0.85rem;color:var(--muted)}
 .main-nav{display:flex;gap:8px}
@@ -64,10 +66,8 @@ main{padding:20px;max-width:1100px;margin:0 auto}
 .group-symbol{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;background:#fff;overflow:hidden;border:2px solid rgba(0,0,0,0.06)}
 
 /* Garantir que imagens SVG/PNG usadas como logos preencham o círculo adequadamente */
-.brand-symbol, .group-symbol {
-  width:72px;
-  height:72px;
-}
+.brand-symbol { width:96px; height:96px; }
+.group-symbol { width:72px; height:72px; }
 .small{color:var(--muted);margin:0}
 .content{margin-top:12px}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start}
@@ -156,10 +156,11 @@ img[data-full], .gallery img, .card-photos img, .group-photos img { cursor: poin
 /* Responsivo */
 @media (max-width:720px){
   .calendar-grid{grid-template-columns:1fr}
-  .brand-symbol{width:46px;height:46px}
+  /* slightly larger brand for tablets/smaller laptops */
+  .brand-symbol{width:64px;height:64px}
   .group-symbol{width:56px;height:56px}
+  .main-nav .nav-link{min-width:95px}
 }
-
 /* Mobile-specific adjustments for better usability */
 @media (max-width:520px){
   /* Stack nav links vertically for easier tapping */
@@ -180,8 +181,8 @@ img[data-full], .gallery img, .card-photos img, .group-photos img { cursor: poin
   /* Event cards smaller spacing */
   .event-card{padding:10px}
 
-  /* Brand and group symbols scaled down */
-  .brand-symbol{width:48px;height:48px}
+  /* Brand and group symbols scaled down for phones */
+  .brand-symbol{width:56px;height:56px}
   .group-symbol{width:48px;height:48px}
 }
 
@@ -302,12 +303,12 @@ body.theme-dom{background:linear-gradient(180deg, rgba(46,139,87,0.06), rgba(46,
 .sidebar-toggle{display:none;background:transparent;border:2px solid transparent;padding:8px 10px;border-radius:10px;font-size:1.25rem;cursor:pointer;color:var(--primary-dark)}
 .sidebar-toggle:focus{outline:3px solid rgba(18,114,170,0.12);outline-offset:3px}
 
-.side-bar{position:fixed;left:0;top:0;bottom:0;width:260px;max-width:82%;background:linear-gradient(180deg,#ffffff,#fbfbfd);box-shadow:2px 0 22px rgba(2,12,27,0.12);z-index:2200;padding:18px 12px;transform:translateX(-108%);transition:transform .28s ease;display:flex;flex-direction:column;gap:12px}
+.side-bar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-width);max-width:82%;background:var(--primary-dark);color:#ffffff;box-shadow:2px 0 22px rgba(2,12,27,0.12);z-index:2200;padding:18px 12px;transform:translateX(-108%);transition:transform .28s ease;display:flex;flex-direction:column;gap:12px}
 .side-bar[aria-hidden="false"]{transform:translateX(0)}
-.sidebar-close{margin-left:auto;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:8px;padding:6px 8px;cursor:pointer}
+.sidebar-close{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;border-radius:8px;padding:6px 8px;cursor:pointer}
 .side-nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.side-nav .nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:none;background:transparent;text-align:left;color:var(--primary-dark);font-weight:600}
-.side-nav .nav-link.active{background:linear-gradient(90deg, rgba(11,42,64,0.06), rgba(11,42,64,0.02));border-radius:10px}
+.side-nav .nav-link{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;border:none;background:transparent;text-align:left;color:var(--bg);font-weight:700}
+.side-nav .nav-link.active{background:rgba(255,255,255,0.06);border-radius:10px}
 
 /* Overlay to dim page when sidebar is open */
 .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.36);z-index:2100;display:none}
@@ -329,7 +330,47 @@ body.theme-dom{background:linear-gradient(180deg, rgba(46,139,87,0.06), rgba(46,
   .side-bar{width:220px}
 }
 
+/* Make sidebar visible (persistent) on notebooks and larger phones/tablets */
+/* keep sidebar collapsed by default on all sizes; toggle will open it */
+.sidebar-toggle{display:inline-flex}
+
+/* when the sidebar is explicitly opened, shift the page content to the right */
+body.sidebar-open main,
+body.sidebar-open .site-header,
+body.sidebar-open .site-footer{
+  margin-left:var(--sidebar-width);
+  transition:margin-left .28s ease;
+}
+
+/* color polish for links and small elements inside sidebar */
+.side-bar a, .side-bar button, .side-bar .badge{color:rgba(255,255,255,0.95)}
+
 /* Hide top navigation entirely — use only the lateral bar for navigation */
 .main-nav{display:none !important}
+
+/* ======================
+   Floating Instagram FAB
+   ====================== */
+.fab-instagram{position:fixed;right:18px;bottom:18px;z-index:3250;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-toggle{width:56px;height:56px;border-radius:999px;background:linear-gradient(45deg,#E1306C,#C13584);color:#fff;border:none;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,12,27,0.18);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+.fab-toggle:active{transform:scale(.98)}
+.fab-menu{display:none;flex-direction:column;gap:8px;margin-bottom:6px;background:transparent}
+.fab-menu.show{display:flex}
+.fab-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:#fff;color:var(--primary-dark);text-decoration:none;box-shadow:0 10px 28px rgba(2,12,27,0.08);font-weight:700}
+.fab-item svg{width:20px;height:20px;flex-shrink:0}
+@media (max-width:520px){
+  .fab-instagram{right:14px;bottom:14px}
+  .fab-toggle{width:52px;height:52px}
+  .fab-item{padding:8px 10px;font-size:0.95rem}
+}
+
+/* Make FAB minimal: show only the provided icon file inside a circular button */
+.fab-toggle{background:transparent;box-shadow:none;padding:0}
+.fab-toggle .fab-icon{width:44px;height:44px;display:block;object-fit:cover;border-radius:999px}
+.fab-toggle:focus-visible{outline:3px solid rgba(18,114,170,0.18);outline-offset:4px;border-radius:999px}
+
+/* Nudge the SVG slightly left and up and make it a bit larger for better visual match */
+.fab-toggle .fab-icon{transform:translate(-6px,-4px) scale(1.06);width:48px;height:48px}
+.fab-toggle svg.fab-icon { display:block }
 
 
