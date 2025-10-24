@@ -1,7 +1,40 @@
 // Navegação entre seções (SPA simples)
 document.addEventListener('DOMContentLoaded',()=>{
-  const links = document.querySelectorAll('.main-nav .nav-link, .btn[data-target]');
+  // Only use sidebar nav buttons and any in-page elements that have data-target
+  const links = document.querySelectorAll('#sidebar .nav-link, .btn[data-target]');
   links.forEach(btn=> btn.addEventListener('click', navTo));
+
+  // Sidebar toggle handlers (mobile lateral menu)
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarClose = document.getElementById('sidebar-close');
+  const sidebarOverlay = document.createElement('div');
+  sidebarOverlay.className = 'sidebar-overlay';
+  sidebarOverlay.id = 'sidebar-overlay';
+  sidebarOverlay.setAttribute('aria-hidden','true');
+  document.body.appendChild(sidebarOverlay);
+
+  function openSidebar(){
+    if(!sidebar) return;
+    sidebar.setAttribute('aria-hidden','false');
+    sidebarOverlay.setAttribute('aria-hidden','false');
+    // focus first link for accessibility
+    const first = sidebar.querySelector('.nav-link'); if(first) first.focus();
+  }
+  function closeSidebar(){
+    if(!sidebar) return;
+    sidebar.setAttribute('aria-hidden','true');
+    sidebarOverlay.setAttribute('aria-hidden','true');
+  }
+  if(sidebarToggle) sidebarToggle.addEventListener('click', ()=> openSidebar());
+  if(sidebarClose) sidebarClose.addEventListener('click', ()=> closeSidebar());
+  if(sidebarOverlay) sidebarOverlay.addEventListener('click', ()=> closeSidebar());
+
+  // Make sidebar nav buttons navigate and close the sidebar on selection (mobile UX)
+  const sideNavLinks = document.querySelectorAll('#sidebar .nav-link');
+  if(sideNavLinks && sideNavLinks.length){
+    sideNavLinks.forEach(btn=> btn.addEventListener('click', (e)=>{ navTo(e); closeSidebar(); }));
+  }
 
   // lightbox
   const galleryImgs = document.querySelectorAll('.gallery img');
@@ -64,7 +97,8 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(s=> s.classList.remove('active'));
   const el = document.getElementById(id);
   if(el) el.classList.add('active');
-  document.querySelectorAll('.main-nav .nav-link').forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
+  // Toggle active state only for sidebar navigation buttons
+  document.querySelectorAll('#sidebar .nav-link').forEach(btn=> btn.classList.toggle('active', btn.dataset.target===id));
   location.hash = id;
   // set page theme class on body
   const body = document.body;
