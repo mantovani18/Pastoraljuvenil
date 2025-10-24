@@ -33,11 +33,12 @@ html,body{height:100%;margin:0;font-family:Segoe UI, Roboto, Arial, sans-serif;c
 
 .main-nav .nav-link[data-target="yeshua"]{ /* Yeshua - laranja */
   color:var(--accent-yeshua);
-  background:linear-gradient(180deg, rgba(255,122,0,0.04), rgba(255,122,0,0.02));
+    /* Mais laranja (RGB ajustado) */
+    background:linear-gradient(180deg, rgba(255,107,0,0.08), rgba(255,107,0,0.04));
 }
 .main-nav .nav-link[data-target="yeshua"].active{
-  background:linear-gradient(180deg, rgba(255,122,0,0.18), rgba(255,122,0,0.12));
-  border-color:rgba(231, 90, 9, 0.6);
+    background:linear-gradient(180deg, rgba(255,107,0,0.28), rgba(255,107,0,0.16));
+    border-color:rgba(255,107,0,0.6);
 }
 
 .main-nav .nav-link[data-target="dom"]{ /* Dom - verde */
@@ -159,10 +160,37 @@ img[data-full], .gallery img, .card-photos img, .group-photos img { cursor: poin
   .group-symbol{width:56px;height:56px}
 }
 
+/* Mobile-specific adjustments for better usability */
+@media (max-width:520px){
+  /* Stack nav links vertically for easier tapping */
+  .main-nav{flex-direction:column;align-items:stretch;gap:8px}
+  .main-nav .nav-link{width:100%;text-align:center;padding:10px 12px}
+
+  /* Gallery: smaller min column and reduced gaps to fit small screens */
+  .gallery{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .gallery-item img{height:180px}
+
+  /* Reduce badge size slightly on small screens */
+  .gallery-item .badge{font-size:0.85rem;left:10px;top:10px;padding:6px 8px}
+
+  /* Modal stretches more naturally on phones */
+  .modal-content{max-width:95%;width:96%;padding:14px}
+  .modal .btn{padding:9px 12px}
+
+  /* Event cards smaller spacing */
+  .event-card{padding:10px}
+
+  /* Brand and group symbols scaled down */
+  .brand-symbol{width:48px;height:48px}
+  .group-symbol{width:48px;height:48px}
+}
+
 /* Page theme backgrounds (tints of group colors) */
 body.theme-home{background:linear-gradient(180deg, rgba(11,42,64,0.06), rgba(11,42,64,0.02));}
 /* stronger, warmer orange tint for the Yeshua page - increased RGBA for a richer orange */
 body.theme-yeshua{background:linear-gradient(180deg, rgba(231, 124, 23, 0.18), rgba(255,122,0,0.08));}
+/* Tom de fundo Yeshua levemente mais quente em RGB */
+body.theme-yeshua{background:linear-gradient(180deg, rgba(255,107,0,0.14), rgba(255,107,0,0.06));}
 
 /* subtle header tint on the Yeshua section to reinforce the orange theme */
 .section-header.yeshua{background:linear-gradient(90deg, rgba(255,122,0,0.06), rgba(255,122,0,0.02));padding:10px;border-radius:10px}
@@ -213,4 +241,95 @@ body.theme-dom{background:linear-gradient(180deg, rgba(46,139,87,0.06), rgba(46,
 
 /* alternative button style */
 .btn.alt{background:#fff;color:var(--primary-dark);border:1px solid #ddd}
+
+/* ===========================
+   Mobile improvements (touch, spacing, readability)
+   =========================== */
+/* Mobile-first overrides to make the UI friendlier on phones */
+@media (max-width:520px){
+  /* Header layout: stack brand + nav for easier scanning and larger tap targets */
+  .site-header{flex-direction:column;align-items:stretch;gap:12px;padding:14px}
+  .brand{align-items:center;width:100%;justify-content:flex-start;gap:12px}
+  .brand > div{flex:1}
+
+  /* Nav becomes a horizontal scroll on very small widths for quick access, but keep full-width buttons for accessibility */
+  .main-nav{display:flex;flex-direction:row;gap:8px;overflow-x:auto;padding-bottom:4px}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav .nav-link{min-width:110px;white-space:nowrap;padding:12px 14px;border-radius:12px;font-size:1rem}
+
+  /* Make primary buttons larger and full-width for easy tapping */
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 14px;border-radius:12px;font-size:1rem}
+  .card .btn{width:100%}
+
+  /* Cards stack into a single column for readability */
+  .cards{grid-template-columns:1fr;gap:14px}
+
+  /* Slightly larger typography for small screens */
+  html{font-size:15px}
+  .site-header h1{font-size:1.15rem}
+  .tagline{font-size:0.95rem}
+
+  /* Images: use fluid heights and keep aspect, reduce heavy shadows for better performance */
+  .card img, .gallery-item img{height:auto;max-height:320px;object-fit:cover}
+
+  /* Badges and small text tweaks */
+  .gallery-item .badge{font-size:0.9rem;padding:7px 9px}
+
+  /* Modal and lightbox should fit the viewport nicely */
+  .lightbox img{max-width:98%;max-height:84%}
+  .modal-content{max-width:96%;width:96%;padding:12px}
+
+  /* Improved focus outlines for keyboard and accessibility */
+  .nav-link:focus-visible, .btn:focus-visible, .filter-btn:focus-visible{outline:3px solid rgba(18,114,170,0.18);outline-offset:3px;border-radius:10px}
+
+  /* Reduce visual noise on mobiles (lighter shadows) */
+  .event-card, .card{box-shadow:0 8px 20px rgba(2,12,27,0.06)}
+
+  /* Footer spacing */
+  .site-footer{padding:18px;font-size:0.95rem}
+}
+
+/* Small polish for medium phones/tablets to avoid cramped layouts */
+@media (max-width:720px){
+  .brand-symbol{width:56px;height:56px}
+  .group-symbol{width:56px;height:56px}
+  .main-nav .nav-link{min-width:95px}
+}
+
+/* ------------------
+   Sidebar (lateral) styles
+   ------------------ */
+.sidebar-toggle{display:none;background:transparent;border:2px solid transparent;padding:8px 10px;border-radius:10px;font-size:1.25rem;cursor:pointer;color:var(--primary-dark)}
+.sidebar-toggle:focus{outline:3px solid rgba(18,114,170,0.12);outline-offset:3px}
+
+.side-bar{position:fixed;left:0;top:0;bottom:0;width:260px;max-width:82%;background:linear-gradient(180deg,#ffffff,#fbfbfd);box-shadow:2px 0 22px rgba(2,12,27,0.12);z-index:2200;padding:18px 12px;transform:translateX(-108%);transition:transform .28s ease;display:flex;flex-direction:column;gap:12px}
+.side-bar[aria-hidden="false"]{transform:translateX(0)}
+.sidebar-close{margin-left:auto;background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:8px;padding:6px 8px;cursor:pointer}
+.side-nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.side-nav .nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:none;background:transparent;text-align:left;color:var(--primary-dark);font-weight:600}
+.side-nav .nav-link.active{background:linear-gradient(90deg, rgba(11,42,64,0.06), rgba(11,42,64,0.02));border-radius:10px}
+
+/* Overlay to dim page when sidebar is open */
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.36);z-index:2100;display:none}
+.sidebar-overlay[aria-hidden="false"]{display:block}
+
+/* On small screens, prefer the sidebar and hide the top nav to optimize vertical space */
+@media (max-width:520px){
+  /* keep earlier behavior for very small screens (sidebar visible) */
+  .main-nav{display:none !important}
+  .sidebar-toggle{display:inline-flex}
+  /* Ensure .side-bar sits above content and doesn't push layout */
+  .side-bar{width:280px}
+  main{filter:none}
+}
+
+/* On slightly larger small screens, keep both but reduce sidebar width */
+@media (min-width:521px) and (max-width:920px){
+  .sidebar-toggle{display:inline-flex}
+  .side-bar{width:220px}
+}
+
+/* Hide top navigation entirely — use only the lateral bar for navigation */
+.main-nav{display:none !important}
+
 
