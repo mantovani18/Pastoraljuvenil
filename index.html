@@ -15,6 +15,9 @@
         <p class="tagline">Acolhendo jovens — fé, encontro e missão</p>
       </div>
     </div>
+    <!-- Toggle para abrir a barra lateral em dispositivos pequenos -->
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Abrir menu">☰</button>
+
     <nav class="main-nav" aria-label="Navegação principal">
       <button data-target="home" class="nav-link active">Início</button>
       <button data-target="yeshua" class="nav-link">Yeshua</button>
@@ -24,6 +27,19 @@
       <button data-target="contact" class="nav-link">Contato</button>
     </nav>
   </header>
+
+  <!-- Barra lateral de seleção (visível em telas pequenas / como alternativa ao topo) -->
+  <aside id="sidebar" class="side-bar" aria-hidden="true">
+    <button id="sidebar-close" class="sidebar-close" aria-label="Fechar">✕</button>
+    <nav class="side-nav" aria-label="Navegação lateral">
+      <button data-target="home" class="nav-link active">Início</button>
+      <button data-target="yeshua" class="nav-link">Yeshua</button>
+      <button data-target="dom" class="nav-link">Dom</button>
+      <button data-target="calendar" class="nav-link">Calendário</button>
+      <button data-target="gallery" class="nav-link">Galeria</button>
+      <button data-target="contact" class="nav-link">Contato</button>
+    </nav>
+  </aside>
 
   <main>
     <section id="home" class="page active">
