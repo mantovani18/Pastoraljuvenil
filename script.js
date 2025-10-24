@@ -17,7 +17,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   function openSidebar(){
     if(!sidebar) return;
     sidebar.setAttribute('aria-hidden','false');
-    sidebarOverlay.setAttribute('aria-hidden','false');
+    // show overlay only on small screens
+    const w = window.innerWidth || document.documentElement.clientWidth;
+    if(w < 521) sidebarOverlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('sidebar-open');
+    if(sidebarToggle) sidebarToggle.setAttribute('aria-expanded','true');
     // focus first link for accessibility
     const first = sidebar.querySelector('.nav-link'); if(first) first.focus();
   }
@@ -25,8 +29,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(!sidebar) return;
     sidebar.setAttribute('aria-hidden','true');
     sidebarOverlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('sidebar-open');
+    if(sidebarToggle) sidebarToggle.setAttribute('aria-expanded','false');
   }
-  if(sidebarToggle) sidebarToggle.addEventListener('click', ()=> openSidebar());
+  if(sidebarToggle) sidebarToggle.addEventListener('click', ()=>{
+    // toggle
+    if(!sidebar) return;
+    const isOpen = sidebar.getAttribute('aria-hidden') === 'false';
+    if(isOpen) closeSidebar(); else openSidebar();
+  });
   if(sidebarClose) sidebarClose.addEventListener('click', ()=> closeSidebar());
   if(sidebarOverlay) sidebarOverlay.addEventListener('click', ()=> closeSidebar());
 
@@ -35,6 +46,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(sideNavLinks && sideNavLinks.length){
     sideNavLinks.forEach(btn=> btn.addEventListener('click', (e)=>{ navTo(e); closeSidebar(); }));
   }
+
+  // Ensure ARIA state matches viewport: on notebook and larger devices the sidebar should be visible
+  function adjustSidebarForWidth(){
+    // keep sidebar closed when resizing by default; user opens it explicitly
+    closeSidebar();
+  }
+  // initial adjust and on resize
+  adjustSidebarForWidth();
+  window.addEventListener('resize', adjustSidebarForWidth);
 
   // lightbox
   const galleryImgs = document.querySelectorAll('.gallery img');
@@ -85,6 +105,38 @@ document.addEventListener('DOMContentLoaded',()=>{
     // ensure default
     const active = document.querySelector('.gallery-filters .filter-btn.active');
     if(active) filterGallery(active.dataset.filter || 'all');
+
+    // FAB Instagram: toggle menu and wire profile links
+    const fabToggle = document.getElementById('fab-toggle');
+    const fabMenu = document.getElementById('fab-menu');
+    const fabInstagram = document.getElementById('fab-instagram');
+    if(fabToggle && fabMenu && fabInstagram){
+      fabToggle.addEventListener('click', (ev)=>{
+        ev.stopPropagation();
+        const isOpen = fabMenu.classList.contains('show');
+        if(isOpen){
+          fabMenu.classList.remove('show');
+          fabMenu.setAttribute('aria-hidden','true');
+          fabToggle.setAttribute('aria-expanded','false');
+        } else {
+          fabMenu.classList.add('show');
+          fabMenu.setAttribute('aria-hidden','false');
+          fabToggle.setAttribute('aria-expanded','true');
+        }
+      });
+
+      // Close FAB menu when clicking outside
+      document.addEventListener('click', (e)=>{
+        if(!fabInstagram.contains(e.target)){
+          fabMenu.classList.remove('show');
+          fabMenu.setAttribute('aria-hidden','true');
+          fabToggle.setAttribute('aria-expanded','false');
+        }
+      });
+
+      // Ensure menu closes on resize
+  window.addEventListener('resize', ()=>{ fabMenu.classList.remove('show'); fabMenu.setAttribute('aria-hidden','true'); fabToggle.setAttribute('aria-expanded','false'); });
+    }
   }
 });
 
@@ -210,27 +262,29 @@ function populateEvents(){
     containerEl.appendChild(wrapper);
   }
 
-  // Preencher listas dos grupos: devem conter eventos da Pastoral + eventos do próprio grupo
-  // Yeshua: pastoral + yeshua
-  const yCombined = pastoralEvents.concat(yeshuaEvents).sort((a,b)=> a.date - b.date);
-  // Dom: pastoral + dom
-  const dCombined = pastoralEvents.concat(domEvents).sort((a,b)=> a.date - b.date);
+  // Mostrar apenas os dois primeiros eventos por grupo conforme solicitado
+  // Home: dois primeiros eventos da Pastoral Juvenil
+  const firstPastoral = pastoralEvents.slice(0,2).sort((a,b)=> a.date - b.date);
+  renderCardsInto(upc, firstPastoral);
 
-  // Renderizar como cartões visuais em todas as seções solicitadas
-  renderCardsInto(ulYes, yCombined.slice(0,12));
-  renderCardsInto(ulDom, dCombined.slice(0,12));
-  renderCardsInto(calY, yCombined.slice(0,12));
-  renderCardsInto(calD, dCombined.slice(0,12));
+  // Yeshua: dois primeiros eventos do Yeshua
+  const firstYeshua = yeshuaEvents.slice(0,2).sort((a,b)=> a.date - b.date);
+  renderCardsInto(ulYes, firstYeshua);
 
-  // Página inicial: apenas eventos da Pastoral Juvenil (próximos N)
-  renderCardsInto(upc, pastoralEvents.sort((a,b)=> a.date - b.date).slice(0,6));
+  // Dom: dois primeiros eventos do Dom
+  const firstDom = domEvents.slice(0,2).sort((a,b)=> a.date - b.date);
+  renderCardsInto(ulDom, firstDom);
 
-  // --- Render visual calendar (cards) ---
+  // Também preenche (se existirem) os contêineres cal-yeshua / cal-dom com os mesmos dois eventos
+  if(calY) renderCardsInto(calY, firstYeshua);
+  if(calD) renderCardsInto(calD, firstDom);
+
+  // --- Render visual calendar (cards) mostrando até 2 eventos por grupo combinados ---
   const calendarContainer = document.getElementById('calendar-events');
   if(calendarContainer){
     calendarContainer.innerHTML = '';
-    // combinar todos os eventos e ordenar
-    const allEvents = pastoralEvents.concat(yeshuaEvents, domEvents).sort((a,b)=> a.date - b.date).slice(0,12);
+    // combinar dois de cada grupo e ordenar
+    const allEvents = firstPastoral.concat(firstYeshua, firstDom).sort((a,b)=> a.date - b.date);
     allEvents.forEach((ev, idx)=>{
       calendarContainer.appendChild(createEventCard(ev, idx));
     });
