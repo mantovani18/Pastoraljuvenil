@@ -23,7 +23,7 @@
   --radius:18px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:"Inter", "Segoe UI", sans-serif;color:var(--ink)}
+html,body{margin:0;padding:0;font-family:"Inter", "Segoe UI", sans-serif;color:var(--ink);width:100%;overflow-x:hidden}
 body{background:linear-gradient(180deg, #f5f6f8 0%, #eef1f4 100%)}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
@@ -46,7 +46,7 @@ body::after{
   background:radial-gradient(circle, rgba(47,158,68,0.2), transparent 70%);
 }
 
-main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-direction:column;gap:28px}
+main{width:100%;max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-direction:column;gap:28px}
 
 .section{
   background:#ffffff;
@@ -100,6 +100,7 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
   margin:0;
   padding:20px 28px;
   display:flex;
+  flex-wrap:wrap;
   align-items:center;
   justify-content:flex-start;
   gap:20px;
@@ -107,11 +108,12 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
   
 }
 .brand{display:flex;align-items:center;gap:14px}
+.brand{min-width:0}
 .brand-logo{width:88px;height:88px;border-radius:18px;object-fit:cover;box-shadow:0 12px 28px rgba(18,26,33,0.14)}
 .brand-eyebrow{text-transform:uppercase;font-size:0.7rem;letter-spacing:0.18em;color:#cfe2ff;margin:0}
 .brand-title{font-family:"Poppins", sans-serif;font-size:1.2rem;margin:4px 0 0;color:#ffffff}
 .site-nav{display:flex;gap:18px;align-items:center;margin-left:auto}
-.site-nav a{color:#eaf2ff;font-weight:600}
+.site-nav a{color:#eaf2ff;font-weight:600;white-space:nowrap}
 .site-nav a:hover{color:#ffffff}
 .header-actions{display:flex;align-items:center;gap:12px}
 .menu-toggle{
@@ -291,23 +293,35 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
 .registration-modal.show{display:flex;animation:fadeIn .22s ease}
 .registration-overlay{position:fixed;inset:0;background:rgba(12,16,20,0.5);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1300}
 .registration-overlay.show{opacity:1;pointer-events:auto}
-.registration-section{background:var(--surface);border-radius:24px;padding:28px;box-shadow:var(--shadow);width:min(780px, 96vw);position:relative;animation:slideUp .28s ease}
-.registration-close{position:absolute;top:14px;right:14px;border:none;background:rgba(28,37,43,0.08);width:36px;height:36px;border-radius:10px;cursor:pointer}
-.registration-header h2{font-family:"Poppins", sans-serif;margin:0 0 6px}
-.registration-header p{color:var(--muted);margin:0 0 18px}
+.registration-section{background:linear-gradient(160deg, #fff8e9 0%, #f8e6bf 45%, #f2dbb0 100%);border:1px solid rgba(122,17,23,0.2);border-radius:24px;padding:28px;box-shadow:0 20px 44px rgba(95,11,16,0.2);width:min(780px, 96vw);position:relative;animation:slideUp .28s ease}
+.registration-close{position:absolute;top:14px;right:14px;border:none;background:rgba(122,17,23,0.12);color:var(--event-wine-deep);width:36px;height:36px;border-radius:10px;cursor:pointer}
+.registration-header h2{font-family:"Poppins", sans-serif;margin:0 0 6px;color:var(--event-wine-deep)}
+.registration-header p{color:#6a2c31;margin:0 0 18px}
 .registration-form{display:flex;flex-direction:column;gap:16px}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:stretch}
-.registration-form label{display:flex;flex-direction:column;gap:6px;font-weight:600}
+.registration-form label{display:flex;flex-direction:column;gap:6px;font-weight:600;color:var(--event-wine-deep)}
 .registration-form input{
-  padding:12px 14px;border-radius:12px;border:1px solid rgba(28,37,43,0.2);font:inherit;height:48px
+  padding:12px 14px;border-radius:12px;border:1px solid rgba(122,17,23,0.22);background:rgba(255,255,255,0.92);font:inherit;height:48px
 }
-.form-status{font-weight:600;color:var(--secondary)}
-.registration-summary{margin:16px 0 12px;padding:16px;border-radius:16px;background:linear-gradient(120deg, rgba(255,210,111,0.45), rgba(16,167,162,0.08))}
-.summary-tag{display:inline-block;text-transform:uppercase;letter-spacing:0.12em;font-size:0.7rem;font-weight:700;color:var(--secondary)}
-.registration-summary h3{margin:6px 0 6px;font-family:"Poppins", sans-serif}
-.registration-summary p{margin:0 0 10px;color:var(--muted)}
-.summary-meta{display:flex;gap:12px;flex-wrap:wrap;font-weight:700;color:var(--ink)}
-.summary-meta span{background:rgba(255,255,255,0.85);padding:6px 10px;border-radius:999px}
+.form-status{font-weight:600;color:var(--event-wine)}
+.registration-summary{margin:16px 0 12px;padding:16px;border-radius:16px;background:linear-gradient(125deg, rgba(241,199,119,0.45), rgba(122,17,23,0.14));border:1px solid rgba(122,17,23,0.16)}
+.summary-tag{display:inline-block;text-transform:uppercase;letter-spacing:0.12em;font-size:0.7rem;font-weight:700;color:var(--event-wine-deep)}
+.registration-summary h3{margin:6px 0 6px;font-family:"Poppins", sans-serif;color:var(--event-wine-deep)}
+.registration-summary p{margin:0 0 10px;color:#6a2c31}
+.summary-meta{display:flex;gap:12px;flex-wrap:wrap;font-weight:700;color:var(--event-wine-deep)}
+.summary-meta span{background:rgba(255,255,255,0.86);border:1px solid rgba(122,17,23,0.2);padding:6px 10px;border-radius:999px}
+
+.registration-section .btn.primary{
+  background:var(--event-gold);
+  color:var(--event-wine-deep);
+  border:1px solid rgba(122,17,23,0.3);
+  box-shadow:0 10px 22px rgba(95,11,16,0.25);
+}
+
+.registration-section .btn.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(95,11,16,0.3);
+}
 
 /* Footer */
 .site-footer{
@@ -453,6 +467,7 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
 @media (max-width:980px){
   .site-nav{display:none}
   .menu-toggle{display:inline-flex}
+  .site-header{padding:16px 18px}
   .hero-content{grid-template-columns:1fr}
   .hero-media img{height:300px}
   .about-section{grid-template-columns:1fr}
@@ -464,8 +479,13 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
   .section{padding:16px}
   .hero-wrapper{padding:16px}
   .hero{padding:22px;border-radius:22px}
+  .hero-subtitle{font-size:0.98rem;max-width:100%}
   .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{width:100%}
+  .hero-stats{gap:10px}
+  .stat{width:100%}
   .hero-media img{height:260px}
+  .form-grid{grid-template-columns:1fr}
   .info-grid,
   .groups-grid,
   .contact-grid,
@@ -475,10 +495,16 @@ main{max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:flex;flex-dir
 }
 
 @media (max-width:640px){
-  .site-header{padding:16px 14px;flex-direction:column;align-items:flex-start}
-  .header-actions{width:100%;justify-content:space-between}
-  .brand-logo{width:72px;height:72px}
-  .brand-title{font-size:1.05rem}
+  .site-header{padding:12px 12px;flex-direction:row;align-items:center;gap:10px}
+  .brand{gap:8px}
+  .brand-logo{width:52px;height:52px;border-radius:12px}
+  .brand > div{display:none}
+  .site-nav{display:flex !important;margin-left:auto;gap:10px}
+  .site-nav a{font-size:0.95rem}
+  .header-actions{display:none}
+  .menu-toggle{display:none}
+  .brand-title{font-size:clamp(0.95rem, 5vw, 1.05rem)}
+  .events-heading h2{font-size:1.6rem}
   .btn{width:100%}
   .footer-content{grid-template-columns:1fr;gap:16px;padding:20px 18px 16px}
   .footer-brand,.footer-links,.footer-contact,.footer-social-section{justify-self:start;text-align:left;align-items:flex-start}
