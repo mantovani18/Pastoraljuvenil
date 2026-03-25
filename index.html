@@ -60,6 +60,10 @@
                 <p class="stat-label">Local</p>
                 <strong id="event-location">Paróquia São José</strong>
               </div>
+              <div class="stat card">
+                <p class="stat-label">Inscrição</p>
+                <strong>R$ 80,00</strong>
+              </div>
             </div>
           </div>
           <div class="hero-media">
@@ -157,6 +161,7 @@
         <h2>Inscrição no evento</h2>
         <p>Preencha seus dados e confirme sua participação no evento atual.</p>
       </div>
+      <p id="payment-note" class="registration-payment-note">Inscrição: R$ 80,00. PIX: 07799478942. Envie o comprovante para concluir.</p>
       <div class="registration-summary" aria-live="polite">
         <span class="summary-tag">Evento</span>
         <h3 id="summary-name">Amoriza</h3>
@@ -164,6 +169,7 @@
         <div class="summary-meta">
           <span id="summary-date">Em breve</span>
           <span id="summary-location">Paroquia Sao Jose</span>
+          <span id="summary-price">Valor: R$ 80,00</span>
         </div>
       </div>
       <form id="registration-form" class="registration-form" novalidate>
@@ -184,6 +190,10 @@
           <label>
             É alérgico a algum alimento ou algo?
             <input name="alergia" type="text" placeholder="Se não tiver, escreva: Não">
+          </label>
+          <label>
+            Comprovante de pagamento (PIX: 07799478942)
+            <input name="comprovante" type="file" accept="image/*,.pdf" required>
           </label>
         </div>
         <button type="submit" class="btn primary">Enviar inscrição</button>

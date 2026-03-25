@@ -1,11 +1,15 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxshT96FFqhSi8U6MnblqYGIlBHfEQHHYiGvg4UxuVqsp0VfsR-Sq4pLgAUO2z3wfvDaQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuOyuRMnJpJod-RU_JhSjBi8wH6z8qcoaor_zBCsCMIosrXjOaI-quvSDC9rlkBfMkHQ/exec';
 
 const EVENT_CONFIG = {
   name: 'Amoriza',
   description: 'O AMOR FLORESCEU EM MIM - DESPERTAR',
   image: 'imgEvento/Amoriza.jpeg',
   date: '01/02/03 de Maio de 2026',
-  location: 'Paroquia São José'
+  location: 'Paroquia São José',
+  group: 'Pastoral Juvenil',
+  paid: true,
+  price: 'R$ 80,00',
+  pixKey: '07799478942'
 };
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -29,6 +33,8 @@ function applyEventContent(){
   const summaryDesc = document.getElementById('summary-description');
   const summaryDate = document.getElementById('summary-date');
   const summaryLocation = document.getElementById('summary-location');
+  const summaryPrice = document.getElementById('summary-price');
+  const paymentNote = document.getElementById('payment-note');
 
   if(nameEl) nameEl.textContent = EVENT_CONFIG.name;
   if(descEl) descEl.textContent = EVENT_CONFIG.description;
@@ -46,6 +52,10 @@ function applyEventContent(){
   if(summaryDesc) summaryDesc.textContent = EVENT_CONFIG.description;
   if(summaryDate) summaryDate.textContent = EVENT_CONFIG.date;
   if(summaryLocation) summaryLocation.textContent = EVENT_CONFIG.location;
+  if(summaryPrice) summaryPrice.textContent = EVENT_CONFIG.paid ? `Valor: ${EVENT_CONFIG.price}` : 'Evento gratuito';
+  if(paymentNote) paymentNote.textContent = EVENT_CONFIG.paid
+    ? `Inscrição: ${EVENT_CONFIG.price}. PIX: ${EVENT_CONFIG.pixKey}. Envie o comprovante para concluir.`
+    : 'Evento gratuito. Não é necessário comprovante.';
 }
 
 function setupMenu(){
@@ -79,6 +89,7 @@ function setupForm(){
   const form = document.getElementById('registration-form');
   const status = document.getElementById('form-status');
   const contactInput = form ? form.querySelector('input[name="contato"]') : null;
+  const proofInput = form ? form.querySelector('input[name="comprovante"]') : null;
   if(!form) return;
 
   if(contactInput){
@@ -90,13 +101,37 @@ function setupForm(){
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const data = new FormData(form);
+    const comprovanteFile = proofInput && proofInput.files ? proofInput.files[0] : null;
+
+    if(EVENT_CONFIG.paid && !comprovanteFile){
+      if(status) status.textContent = `Envie o comprovante para concluir a inscrição (${EVENT_CONFIG.price}).`;
+      return;
+    }
+
+    if(comprovanteFile && comprovanteFile.size > 6 * 1024 * 1024){
+      if(status) status.textContent = 'O comprovante deve ter no máximo 6MB.';
+      return;
+    }
+
+    let comprovanteData = null;
+    if(comprovanteFile){
+      try {
+        comprovanteData = await readFileAsBase64(comprovanteFile);
+      } catch (_error) {
+        if(status) status.textContent = 'Não foi possível ler o comprovante. Tente outro arquivo.';
+        return;
+      }
+    }
+
     const payload = {
       evento: data.get('evento') || EVENT_CONFIG.name,
       nome: String(data.get('nome') || '').trim(),
       idade: String(data.get('idade') || '').trim(),
       contato: String(data.get('contato') || '').trim(),
-      numero: String(data.get('contato') || '').trim(),
-      alergia: String(data.get('alergia') || '').trim() || 'Nao informado'
+      alergia: String(data.get('alergia') || '').trim() || 'Nao informado',
+      comprovanteNome: comprovanteData ? comprovanteData.fileName : '',
+      comprovanteMimeType: comprovanteData ? comprovanteData.mimeType : '',
+      comprovanteBase64: comprovanteData ? comprovanteData.base64 : ''
     };
 
     if(!payload.nome || !payload.idade || !payload.contato){
@@ -110,7 +145,7 @@ function setupForm(){
       return;
     }
 
-    if(status) status.textContent = 'Enviando inscricao...';
+    if(status) status.textContent = EVENT_CONFIG.paid ? 'Enviando inscrição e comprovante...' : 'Enviando inscrição...';
     try{
       const result = await sendRegistration(scriptUrl, payload);
       if(status) status.textContent = result.message;
@@ -120,6 +155,28 @@ function setupForm(){
     } catch (err){
       if(status) status.textContent = err.message || 'Nao foi possivel enviar agora. Tente novamente.';
     }
+  });
+}
+
+function readFileAsBase64(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || '');
+      const commaIndex = result.indexOf(',');
+      const base64 = commaIndex >= 0 ? result.slice(commaIndex + 1) : '';
+      if(!base64){
+        reject(new Error('Arquivo inválido'));
+        return;
+      }
+      resolve({
+        fileName: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        base64
+      });
+    };
+    reader.onerror = () => reject(new Error('Falha ao ler arquivo'));
+    reader.readAsDataURL(file);
   });
 }
 
@@ -164,21 +221,7 @@ async function sendRegistration(scriptUrl, payload){
     if(String(firstError.message || '').toLowerCase().includes('dopost')){
       throw firstError;
     }
-
-    try {
-      await fetch(scriptUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body
-      });
-
-      return {
-        message: 'Inscricao enviada. Se nao aparecer na planilha em 1 minuto, confira a implantacao do Apps Script.'
-      };
-    } catch (_fallbackError) {
-      throw new Error(`Nao foi possivel enviar a inscricao (${firstError.message}).`);
-    }
+    throw new Error(`Nao foi possivel enviar a inscricao (${firstError.message}).`);
   }
 }
 
