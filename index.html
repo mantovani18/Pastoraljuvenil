@@ -4,267 +4,261 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pastoral Juvenil de Rolândia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header" id="inicio">
     <div class="brand">
-      <img src="PastoralJuvenil.jpg" alt="Logo Pastoral Juvenil" class="brand-symbol">
+      <img src="imgPastora/PastoralJuvenil.jpg" alt="Logo Pastoral Juvenil" class="brand-logo" loading="lazy">
       <div>
-        <h1>Pastoral Juvenil de Rolândia</h1>
-        <p class="tagline">Acolhendo jovens — fé, encontro e missão</p>
+        <p class="brand-eyebrow">Pastoral Juvenil</p>
+        <h1 class="brand-title">Pastoral Juvenil de Rolândia</h1>
       </div>
     </div>
-    <!-- Toggle para abrir a barra lateral em dispositivos pequenos -->
-    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Abrir menu">☰</button>
-
-    <nav class="main-nav" aria-label="Navegação principal">
-      <button data-target="home" class="nav-link active">Início</button>
-      <button data-target="yeshua" class="nav-link">Yeshua</button>
-      <button data-target="dom" class="nav-link">Dom</button>
-      <button data-target="calendar" class="nav-link">Calendário</button>
-      <button data-target="gallery" class="nav-link">Galeria</button>
-      <button data-target="contact" class="nav-link">Contato</button>
+    <nav class="site-nav" aria-label="Menu principal">
+      <a href="#inicio">Início</a>
+      <a href="#eventos">Eventos</a>
+      <a href="#grupos">Grupos</a>
+      <a href="#contato">Contato</a>
     </nav>
+    <div class="header-actions">
+      <button type="button" class="btn primary" data-open-registration>Inscreva-se</button>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </div>
   </header>
 
-  <!-- Barra lateral de seleção (visível em telas pequenas / como alternativa ao topo) -->
-  <aside id="sidebar" class="side-bar" aria-hidden="true">
-    <button id="sidebar-close" class="sidebar-close" aria-label="Fechar">✕</button>
-    <nav class="side-nav" aria-label="Navegação lateral">
-      <button data-target="home" class="nav-link active">Início</button>
-      <button data-target="yeshua" class="nav-link">Yeshua</button>
-      <button data-target="dom" class="nav-link">Dom</button>
-      <button data-target="calendar" class="nav-link">Calendário</button>
-      <button data-target="gallery" class="nav-link">Galeria</button>
-      <button data-target="contact" class="nav-link">Contato</button>
-    </nav>
-  </aside>
+  <nav id="site-menu" class="mobile-menu" aria-hidden="true">
+    <a href="#inicio">Início</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#grupos">Grupos</a>
+    <a href="#contato">Contato</a>
+    <button type="button" class="btn primary" data-open-registration>Inscreva-se</button>
+  </nav>
+  <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
 
   <main>
-    <section id="home" class="page active">
-      <h2>Bem-vindo à Pastoral Juvenil de Rolândia</h2>
-      <p>A Pastoral Juvenil reúne grupos de jovens que vivem a fé com alegria e serviço. Conheça nossos grupos e programe-se para os próximos encontros.</p>
+    <section id="eventos" class="hero fade-in">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="badge">Evento principal</span>
+          <h2 id="event-name" class="hero-title">Amoriza</h2>
+          <p id="event-description" class="hero-subtitle">Um encontro jovem para viver a fé, a amizade e a missão com alegria.</p>
+          <div class="hero-actions">
+            <button type="button" class="btn primary" data-open-registration>Inscrição</button>
+            <a href="#info-evento" class="btn ghost">Mais informações</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <p class="stat-label">Data</p>
+              <strong id="event-date">Em breve</strong>
+            </div>
+            <div class="stat">
+              <p class="stat-label">Local</p>
+              <strong id="event-location">Paróquia São José</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <!-- Fotos dos grupos serão exibidas dentro dos cards abaixo -->
-
-      <div class="cards">
-        <article class="card yeshua">
-          <h3>Yeshua</h3>
-          <p>Grupo de jovens com foco em espiritualidade, louvor e missão.</p>
-          <p><strong>Encontros:</strong> Todo sábado às 18:00</p>
-          <a href="#" class="btn" data-target="yeshua">Saber mais</a>
-          </article>
-
-        <article class="card dom">
-          <h3>Dom</h3>
-          <p>Grupo para jovens maiores de 18 anos, com integração após a missa dominical.</p>
-          <p><strong>Encontros:</strong> Domingo às 20:00</p>
-          <a href="#" class="btn" data-target="dom">Saber mais</a>
-          </article>
-
-        <article class="card events">
-    <h3>Próximos eventos da Pastoral Juvenil</h3>
-    <ul id="upcoming-events" class="event-list"></ul>
+    <section id="info-evento" class="event-info fade-in">
+      <h2>Informações do evento</h2>
+      <div class="info-grid">
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M7 3v3M17 3v3M4 8h16M6 12h4m-4 4h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="4" y="5" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Data</h3>
+            <p id="event-date-card">Em breve</p>
+          </div>
+        </article>
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="11" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Local</h3>
+            <p id="event-location-card">Paróquia São José</p>
+          </div>
+        </article>
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M5 6h14M5 12h10M5 18h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Descrição</h3>
+            <p id="event-short">Encontro de fé e amizade para jovens que desejam viver a missão com alegria.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <section id="yeshua" class="page">
-      <div class="section-header yeshua">
-        <img src="GrupoYeshua.png" alt="Leão Yeshua" class="group-symbol">
-        <div>
-          <h2>Yeshua</h2>
-         
-        </div>
+    <section id="grupos" class="groups-section fade-in">
+      <div class="section-title">
+        <h2>Encontros fixos</h2>
+        <p>Horários organizados para você acompanhar a pastoral durante a semana.</p>
       </div>
-
-      <div class="content">
-        <h3>Sobre o grupo</h3>
-        <p>Yeshua é um espaço de acolhimento, formação e oração para os jovens. Promovemos encontros semanais, retiros, formações e ações sociais.</p>
-
-        <h4>Horário de encontro</h4>
-        <p>Todo sábado às <strong>18:00</strong>.</p>
-
-        <h4>Próximos encontros</h4>
-        <ul id="yeshua-events" class="event-list"></ul>
-
-        <h4>Galeria de encontros</h4>
-        <div class="gallery" id="gallery-yeshua">
-          <figure class="gallery-item" data-group="yeshua">
-            <img src="fto1Yeshua.jpg" alt="Encontro Yeshua 1" data-full="fto1Yeshua.jpg">
-            <figcaption class="badge">Yeshua</figcaption>
-          </figure>
-          <figure class="gallery-item" data-group="yeshua">
-            <img src="foto2Yeshua.jpg" alt="Encontro Yeshua 2" data-full="foto2Yeshua.jpg">
-            <figcaption class="badge">Yeshua</figcaption>
-          </figure>
-        </div>
-
-        
+      <div class="groups-grid">
+        <article class="group-card">
+          <h3>Grupo Yeshua</h3>
+          <p>Sábado • 18h</p>
+          <span class="group-pill">Fé e comunhão</span>
+        </article>
+        <article class="group-card">
+          <h3>Grupo DOM</h3>
+          <p>Domingo • 20h</p>
+          <span class="group-pill">Partilha e missão</span>
+        </article>
+        <article class="group-card highlight">
+          <h3>Confirmar encontros</h3>
+          <p>Para confirmar se haverá encontro nesta semana, verifique no grupo.</p>
+          <button type="button" class="btn ghost" data-open-registration>Falar com a equipe</button>
+        </article>
       </div>
     </section>
 
-    <section id="dom" class="page">
-      <div class="section-header dom">
-        <img src="GrupoDom.jpg" alt="Logo Dom" class="group-symbol">
-        <div>
-          <h2>Dom</h2>
-         
-        </div>
+    <section class="about-section fade-in">
+      <div class="about-content">
+        <h2>Sobre a Pastoral Juvenil</h2>
+        <p>Somos uma comunidade jovem que acolhe, forma e inspira. Promovemos encontros, retiros e ações missionárias com um olhar atual e conectado à realidade dos jovens.</p>
       </div>
-
-      <div class="content">
-        <h3>Sobre o grupo</h3>
-        <p>Dom é um espaço de maturidade na fé para jovens adultos. Partilhamos experiências de vida, voluntariado, e formação humana e cristã.</p>
-
-        <h4>Horário de encontro</h4>
-        <p>Domingo às <strong>20:00</strong> (após a missa).</p>
-
-        <h4>Próximos encontros</h4>
-        <ul id="dom-events" class="event-list"></ul>
-
-        <h4>Galeria de encontros</h4>
-        <div class="gallery" id="gallery-dom">
-          <figure class="gallery-item" data-group="dom">
-            <img src="foto1Dom.jpg" alt="Encontro Dom 1" data-full="foto1Dom.jpg">
-            <figcaption class="badge">Dom</figcaption>
-          </figure>
-          <figure class="gallery-item" data-group="dom">
-            <img src="foto2Dom.jpg" alt="Encontro Dom 2" data-full="foto2Dom.jpg">
-            <figcaption class="badge">Dom</figcaption>
-          </figure>
-        </div>
-
-      
+      <div class="about-highlight">
+        <h3>Organização e cuidado</h3>
+        <p>Eventos bem estruturados, equipe preparada e uma jornada de fé alegre e segura.</p>
       </div>
     </section>
 
-    <section id="calendar" class="page">
-      <h2>Calendário</h2>
-      <p>Próximas programações dos grupos — datas e horários.</p>
-      <div class="calendar-events-wrapper">
-        <h3>Próximos eventos (visual)</h3>
-        <div id="calendar-events" class="calendar-events-grid" aria-live="polite"></div>
+    <section id="contato" class="contact-section fade-in">
+      <div class="section-title">
+        <h2>Contato</h2>
+        <p>Fale com nossos responsáveis e receba todas as informações.</p>
       </div>
-    </section>
-
-    <section id="gallery" class="page">
-      <h2>Galeria</h2>
-      <p>Fotos de encontros passados. Clique para ampliar.</p>
-      <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <button class="filter-btn" data-filter="yeshua">Yeshua</button>
-        <button class="filter-btn" data-filter="dom">Dom</button>
-        <button class="filter-btn" data-filter="pastoral">Pastoral</button>
+      <div class="contact-grid">
+        <article class="contact-card">
+          <h3>Pastoral Juvenil</h3>
+          <p>Leonardo Mantovani</p>
+          <a class="contact-link" href="https://wa.me/5543998740225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </article>
+        <article class="contact-card">
+          <h3>Grupo Yeshua</h3>
+          <p>Gustavo Berbel</p>
+          <a class="contact-link" href="https://wa.me/5543991958106" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </article>
+        <article class="contact-card">
+          <h3>Grupo DOM</h3>
+          <p>João Pirani</p>
+          <a class="contact-link" href="https://wa.me/5543999903199" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </article>
       </div>
-      <div class="gallery" id="gallery-all">
-        <figure class="gallery-item" data-group="yeshua">
-          <img src="fto1Yeshua.jpg" alt="Yeshua 1" data-full="fto1Yeshua.jpg">
-          <figcaption class="badge">Yeshua</figcaption>
-        </figure>
-        <figure class="gallery-item" data-group="yeshua">
-          <img src="foto2Yeshua.jpg" alt="Yeshua 2" data-full="foto2Yeshua.jpg">
-          <figcaption class="badge">Yeshua</figcaption>
-        </figure>
-        <figure class="gallery-item" data-group="dom">
-          <img src="foto1Dom.jpg" alt="Dom 1" data-full="foto1Dom.jpg">
-          <figcaption class="badge">Dom</figcaption>
-        </figure>
-        <figure class="gallery-item" data-group="dom">
-          <img src="foto2Dom.jpg" alt="Dom 2" data-full="foto2Dom.jpg">
-          <figcaption class="badge">Dom</figcaption>
-        </figure>
-        <figure class="gallery-item" data-group="pastoral">
-          <img src="foto1Pastoral.jpg" alt="Pastoral 1" data-full="foto1Pastoral.jpg">
-          <figcaption class="badge">Pastoral</figcaption>
-        </figure>
-        <figure class="gallery-item" data-group="pastoral">
-          <img src="foto2Pastoral.jpg" alt="Pastoral 2" data-full="foto2Pastoral.jpg">
-          <figcaption class="badge">Pastoral</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section id="contact" class="page">
-      <h2>Contato</h2>
-      <p>Quer saber mais ou fazer parte? Entre em contato com a equipe da Pastoral Juvenil de Rolândia.</p>
-      <ul>
-        <li><strong>Pastoral Juvenil</strong>: Leonardo Mantovani — (43) 99874-0225</li>
-        <li><strong>Yeshua</strong>: Gustavo Berbel — (43) 99195-8106</li>
-        <li><strong>Dom</strong>: João Pirani — (43) 99990-3199</li>
-      </ul>
     </section>
   </main>
 
-  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
-    <button id="lb-close" class="lb-close" aria-label="Fechar">✕</button>
-    <img id="lb-image" src="foto2Yeshua.jpg" alt="Imagem ampliada">
-  </div>
-
-  <!-- Event modal -->
-  <div id="event-modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
-      <h3 id="modal-title"></h3>
-      <p id="modal-date"></p>
-
-      <!-- Mini gráfico RSVP -->
-      <div id="modal-chart" class="rsvp-chart" aria-hidden="true">
-        <div class="bar yes">
-          <span class="label">Vão</span>
-          <div class="fill" style="width:0%"></div>
-          <span class="count">0</span>
-        </div>
-        <div class="bar no">
-          <span class="label">Não vão</span>
-          <div class="fill" style="width:0%"></div>
-          <span class="count">0</span>
+  <div id="registration-modal" class="registration-modal" aria-hidden="true">
+    <section id="inscricao" class="registration-section">
+      <button type="button" id="registration-close" class="registration-close" aria-label="Fechar inscrição">✕</button>
+      <div class="registration-header">
+        <h2>Inscrição no evento</h2>
+        <p>Preencha seus dados e confirme sua participação no evento atual.</p>
+      </div>
+      <div class="registration-summary" aria-live="polite">
+        <span class="summary-tag">Evento</span>
+        <h3 id="summary-name">Amoriza</h3>
+        <p id="summary-description">Um encontro jovem para viver a fe, a amizade e a missao com alegria.</p>
+        <div class="summary-meta">
+          <span id="summary-date">Em breve</span>
+          <span id="summary-location">Paroquia Sao Jose</span>
         </div>
       </div>
-
-      <div class="modal-actions">
-        <button id="modal-rsvp" class="btn">Marcar presença</button>
-        <button id="modal-rsvp-no" class="btn alt">Não vou</button>
-        <button id="modal-ics" class="btn">Adicionar ao calendário</button>
-      </div>
-    </div>
+      <form id="registration-form" class="registration-form" novalidate>
+        <input id="event-name-input" name="evento" type="hidden" value="Amoriza">
+        <div class="form-grid">
+          <label>
+            Nome completo
+            <input name="nome" type="text" placeholder="Seu nome" required>
+          </label>
+          <label>
+            Idade
+            <input name="idade" type="number" min="1" placeholder="Ex: 19" required>
+          </label>
+          <label>
+            Contato (WhatsApp)
+            <input name="contato" type="tel" placeholder="(43) 9 9999-9999" required>
+          </label>
+          <label>
+            É alérgico a algum alimento ou algo?
+            <input name="alergia" type="text" placeholder="Se não tiver, escreva: Não">
+          </label>
+        </div>
+        <button type="submit" class="btn primary">Enviar inscrição</button>
+        <p id="form-status" class="form-status" aria-live="polite"></p>
+      </form>
+    </section>
   </div>
+  <div id="registration-overlay" class="registration-overlay" aria-hidden="true"></div>
 
   <footer class="site-footer">
-    <p>© Pastoral Juvenil de Rolândia</p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Pastoral Juvenil</h3>
+        <p>Organização, confiança e acolhimento para jovens viverem a fé com propósito.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Links rápidos</h4>
+        <a href="#inicio">Início</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#grupos">Grupos</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contato</h4>
+        <a href="https://wa.me/5543998740225" target="_blank" rel="noopener noreferrer">Leonardo Mantovani</a>
+        <span>(43) 99874-0225</span>
+        <div class="footer-social">
+          <a href="https://instagram.com/pjuvenil.saojose" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" role="img">
+              <rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="16.6" cy="7.4" r="1" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/5543998740225" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M20 11.5a8.5 8.5 0 1 1-3.2-6.7" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M7.5 19.5l-1.3 3.2 3.3-1.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M9 9.5c1.2 2.7 3.1 4.6 5.8 5.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© Pastoral Juvenil de Rolândia. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Floating Instagram FAB -->
-  <div id="fab-instagram" class="fab-instagram" aria-expanded="false" aria-label="Instagram">
-    <button id="fab-toggle" class="fab-toggle" aria-label="Abrir Instagram">
-      <!-- Inline SVG optimized Instagram-style mark (gradient + white inner elements) -->
-      <svg class="fab-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="igGrad" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="#feda75"/>
-            <stop offset="25%" stop-color="#fa7e1e"/>
-            <stop offset="50%" stop-color="#d62976"/>
-            <stop offset="75%" stop-color="#962fbf"/>
-            <stop offset="100%" stop-color="#4f5bd5"/>
-          </linearGradient>
-        </defs>
-        <!-- rounded square background (Instagram-like gradient) -->
-        <rect width="24" height="24" rx="6" fill="url(#igGrad)"/>
-        <!-- subtle white camera-outline -->
-        <path d="M7.75 7.5h8.5c.83 0 1.5.67 1.5 1.5v6.5c0 .83-.67 1.5-1.5 1.5h-8.5c-.83 0-1.5-.67-1.5-1.5v-6.5c0-.83.67-1.5 1.5-1.5z" fill="none" stroke="#fff" stroke-width="0.9" opacity="0.95"/>
-        <!-- lens ring -->
-        <circle cx="12" cy="12" r="2.9" fill="#fff"/>
-        <!-- small top-right flash/dot -->
-        <circle cx="16.6" cy="7.4" r="0.55" fill="#fff"/>
-      </svg>
-    </button>
-    <div id="fab-menu" class="fab-menu" aria-hidden="true">
-      <a href="https://instagram.com/pjuvenil.saojose" id="fab-pastoral" class="fab-item" target="_blank" rel="noopener noreferrer">Pastoral</a>
-      <a href="https://instagram.com/yeshuagrupo" id="fab-yeshua" class="fab-item" target="_blank" rel="noopener noreferrer">Yeshua</a>
-      <a href="https://instagram.com/dom_grupo" id="fab-dom" class="fab-item" target="_blank" rel="noopener noreferrer">Dom</a>
-    </div>
-  </div>
+  <a
+    class="fab-whatsapp"
+    href="https://wa.me/5543998740225?text=Ol%C3%A1%2C%20Leonardo%20Mantovani!%20Quero%20informa%C3%A7%C3%B5es%20sobre%20o%20evento%20Amoriza."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar no WhatsApp com Leonardo Mantovani"
+    title="WhatsApp Leonardo Mantovani"
+  >
+    <svg class="fab-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle cx="16" cy="16" r="16" fill="#25D366"/>
+      <path fill="#fff" d="M23.58 8.42A10.68 10.68 0 0 0 16 5.3c-5.9 0-10.7 4.8-10.7 10.7a10.63 10.63 0 0 0 1.45 5.37L5.2 26.8l5.57-1.46A10.66 10.66 0 0 0 16 26.7c5.9 0 10.7-4.8 10.7-10.7 0-2.86-1.1-5.55-3.12-7.58Zm-7.58 16.2a8.9 8.9 0 0 1-4.54-1.24l-.32-.2-3.3.86.88-3.22-.2-.33a8.9 8.9 0 1 1 7.48 4.13Zm4.88-6.64c-.27-.13-1.6-.8-1.85-.9-.24-.09-.42-.13-.6.14-.17.27-.67.9-.82 1.1-.15.18-.3.2-.56.07-.27-.14-1.13-.42-2.16-1.34-.8-.72-1.34-1.6-1.5-1.87-.15-.27-.02-.4.12-.53.12-.12.27-.3.4-.45.13-.15.18-.27.27-.45.1-.18.05-.34-.02-.47-.07-.14-.6-1.45-.82-1.98-.22-.53-.44-.45-.6-.46h-.52c-.18 0-.47.07-.72.34-.24.27-.94.92-.94 2.23 0 1.32.96 2.6 1.1 2.78.14.18 1.88 2.86 4.56 4.01.64.27 1.15.43 1.54.55.65.2 1.24.17 1.7.1.52-.08 1.6-.65 1.83-1.28.22-.63.22-1.16.16-1.28-.06-.13-.24-.2-.5-.34Z"/>
+    </svg>
+  </a>
 
   <script src="script.js"></script>
 </body>

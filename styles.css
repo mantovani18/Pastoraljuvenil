@@ -1,376 +1,205 @@
-/* Estilos principais */
+/* Base + palette */
 :root{
-  /* Esquema principal da Pastoral Juvenil (extraído do logo enviado) */
-  --bg:#ffffff;
-  --text:#111111;
-  --primary-pastoral:#1272aa; /* amarelo/dourado */
-  --primary-dark:#0B2A40; /* marinho escuro */
-  --sidebar-width:280px;
-  --accent-yeshua:#ff7a00; /* laranja do Yeshua */
-  --accent-dom:#23a85c; /* verde do Dom */
-  --black:#111111;
-  --muted:#666666;
+  --bg:#f7f6f2;
+  --surface:#ffffff;
+  --ink:#1e2328;
+  --muted:#5c6a76;
+  --primary:#ff7a00;
+  --secondary:#3a8f8a;
+  --accent:#f4d7a4;
+  --soft:#eef6f5;
+  --shadow:0 18px 50px rgba(18,26,33,0.12);
+  --radius:18px;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Segoe UI, Roboto, Arial, sans-serif;color:var(--text);background:var(--bg)}
-.site-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:4px solid #00054db0}
-.brand{display:flex;gap:12px;align-items:center}
-/* Brand/logo size — increased for better visibility */
-.brand-symbol{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;background:#fff;overflow:hidden;border:2px solid rgba(11,42,64,0.06)}
-.site-header h1{margin:0;font-size:1.1rem}
-.tagline{margin:0;font-size:0.85rem;color:var(--muted)}
-.main-nav{display:flex;gap:8px}
-.main-nav .nav-link{background:none;border:2px solid transparent;padding:8px 12px;border-radius:8px;cursor:pointer;color:var(--primary-dark);transition:all .18s ease}
-.main-nav .nav-link.active{border-color:var(--primary-dark);font-weight:600;background:linear-gradient(180deg, rgba(11,42,64,0.12), rgba(11,42,64,0.06));}
+html,body{margin:0;padding:0;font-family:"Inter", "Segoe UI", sans-serif;color:var(--ink);background:var(--bg)}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
 
-/* Coloração por aba (suave no estado normal, mais visível quando ativo) */
-.main-nav .nav-link[data-target="home"]{ /* Pastoral */
-  color:var(--primary-dark);
-  background:linear-gradient(180deg, rgba(11,42,64,0.03), rgba(11,42,64,0.01));
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  z-index:-1;
+  border-radius:999px;
+  filter:blur(0.5px);
 }
-.main-nav .nav-link[data-target="home"].active{
-  background:linear-gradient(180deg, rgba(11,42,64,0.18), rgba(11,42,64,0.12));
-  border-color:rgba(11,42,64,0.6);
+body::before{
+  width:420px;height:420px;left:-120px;top:-120px;
+  background:radial-gradient(circle, rgba(255,122,0,0.18), transparent 70%);
 }
-
-.main-nav .nav-link[data-target="yeshua"]{ /* Yeshua - laranja */
-  color:var(--accent-yeshua);
-    /* Mais laranja (RGB ajustado) */
-    background:linear-gradient(180deg, rgba(255,107,0,0.08), rgba(255,107,0,0.04));
-}
-.main-nav .nav-link[data-target="yeshua"].active{
-    background:linear-gradient(180deg, rgba(255,107,0,0.28), rgba(255,107,0,0.16));
-    border-color:rgba(255,107,0,0.6);
+body::after{
+  width:360px;height:360px;right:-140px;top:120px;
+  background:radial-gradient(circle, rgba(58,143,138,0.18), transparent 70%);
 }
 
-.main-nav .nav-link[data-target="dom"]{ /* Dom - verde */
-  color:var(--accent-dom);
-  background:linear-gradient(180deg, rgba(46,139,87,0.04), rgba(46,139,87,0.02));
+main{max-width:1160px;margin:0 auto;padding:0 20px 96px;display:flex;flex-direction:column;gap:64px}
+
+/* Header */
+.site-header{
+  max-width:1160px;margin:0 auto;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:20px
 }
-.main-nav .nav-link[data-target="dom"].active{
-  background:linear-gradient(180deg, rgba(46,139,87,0.18), rgba(46,139,87,0.12));
-  border-color:rgba(46,139,87,0.6);
-}
-main{padding:20px;max-width:1100px;margin:0 auto}
-.page{display:none}
-.page.active{display:block}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
-.card{padding:16px;border-radius:10px;background:#f9f9f9;border:1px solid #eee}
-.card{display:flex;flex-direction:column;min-height:260px}
-.card h3{margin-top:0}
-.btn{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--primary-dark);color:#fff;text-decoration:none}
-.card.yeshua{border-left:6px solid var(--accent-yeshua)}
-.card.dom{border-left:6px solid var(--accent-dom)}
-.event-list{padding-left:1rem}
-.section-header{display:flex;gap:12px;align-items:center}
-.group-symbol{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;background:#fff;overflow:hidden;border:2px solid rgba(0,0,0,0.06)}
-
-/* Garantir que imagens SVG/PNG usadas como logos preencham o círculo adequadamente */
-.brand-symbol { width:96px; height:96px; }
-.group-symbol { width:72px; height:72px; }
-.small{color:var(--muted);margin:0}
-.content{margin-top:12px}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start}
-.gallery img{width:100%;display:block;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid #eee;aspect-ratio:4/3;max-height:320px}
-
-/* Ensure images inside cards and group-photo areas do not overflow their containers */
-.card{overflow:hidden}
-.card img{width:100%;height:auto;max-height:220px;object-fit:cover;display:block;margin-bottom:8px;transition:transform .26s ease,box-shadow .26s ease;cursor:pointer}
-.group-photos img{width:48%;height:auto;max-height:180px;object-fit:cover}
-
-/* Hover / clickable affordance for images */
-.gallery img:hover, .card img:hover, .group-photos img:hover, .card-photos img:hover{
-  transform: translateY(-6px) scale(1.02);
-  box-shadow:0 18px 40px rgba(2,12,27,0.18);
-  z-index:5;
+.brand{display:flex;align-items:center;gap:14px}
+.brand-logo{width:56px;height:56px;border-radius:16px;object-fit:cover;box-shadow:0 12px 28px rgba(18,26,33,0.14)}
+.brand-eyebrow{text-transform:uppercase;font-size:0.7rem;letter-spacing:0.18em;color:var(--secondary);margin:0}
+.brand-title{font-family:"Poppins", sans-serif;font-size:1.2rem;margin:4px 0 0}
+.site-nav{display:flex;gap:18px;align-items:center}
+.site-nav a{color:var(--muted);font-weight:600}
+.site-nav a:hover{color:var(--ink)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.menu-toggle{
+  display:none;width:44px;height:44px;border-radius:12px;border:none;background:var(--surface);
+  box-shadow:0 10px 22px rgba(14,22,28,0.12);cursor:pointer;font-size:1.2rem
 }
 
-/* Ensure gallery cells don't let images overflow visually */
-.gallery > * { overflow: hidden; }
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:14px;font-weight:700;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.btn.primary{background:var(--primary);color:#fff;box-shadow:0 12px 24px rgba(255,122,0,0.3)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.ghost{background:#fff;border:1px solid rgba(30,35,40,0.12);color:var(--ink)}
+.btn.ghost:hover{border-color:rgba(30,35,40,0.3)}
 
-/* small touch: show pointer for any image that opens lightbox */
-img[data-full], .gallery img, .card-photos img, .group-photos img { cursor: pointer }
+/* Mobile menu */
+.mobile-menu{
+  position:fixed;top:0;right:0;height:100%;width:260px;background:var(--surface);
+  transform:translateX(110%);transition:transform .25s ease;z-index:1200;
+  padding:90px 18px 18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)
+}
+.mobile-menu a{font-weight:700;padding:10px 12px;border-radius:10px;color:var(--ink)}
+.mobile-menu a:hover{background:rgba(255,122,0,0.12)}
+.mobile-menu.open{transform:translateX(0)}
+.menu-overlay{position:fixed;inset:0;background:rgba(10,16,20,0.4);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1100}
+.menu-overlay.show{opacity:1;pointer-events:auto}
 
-/* Gallery item wrapper with colored badge and left accent */
-.gallery-item{position:relative;overflow:hidden;border-radius:12px;background:#fff;padding:8px;border:1px solid rgba(0,0,0,0.04)}
-.gallery-item .badge{position:absolute;left:12px;top:12px;padding:8px 10px;border-radius:999px;background:rgba(0,0,0,0.06);font-weight:800;font-size:0.95rem;color:var(--primary-dark)}
-.gallery-item[data-group="yeshua"]{border-left:10px solid var(--accent-yeshua)}
-.gallery-item[data-group="dom"]{border-left:10px solid var(--accent-dom)}
-.gallery-item[data-group="pastoral"]{border-left:10px solid var(--primary-pastoral)}
-.gallery-item[data-group="yeshua"] .badge{background:linear-gradient(90deg, rgba(255,122,0,0.16), rgba(255,122,0,0.06));color:var(--accent-yeshua)}
-.gallery-item[data-group="dom"] .badge{background:linear-gradient(90deg, rgba(46,139,87,0.16), rgba(46,139,87,0.06));color:var(--accent-dom)}
-.gallery-item[data-group="pastoral"] .badge{background:linear-gradient(90deg, rgba(242,178,51,0.16), rgba(242,178,51,0.06));color:var(--primary-pastoral)}
-.gallery-item img{display:block;width:100%;height:280px;object-fit:cover;border-radius:8px}
-.gallery-item:hover .badge{transform:translateY(-2px);opacity:0.95}
+/* Hero */
+.hero{
+  background:linear-gradient(135deg, rgba(255,122,0,0.08), rgba(58,143,138,0.08));
+  border-radius:28px;padding:36px;box-shadow:var(--shadow)
+}
+.hero-content{display:grid;grid-template-columns:1.1fr 0.9fr;gap:32px;align-items:center}
+.hero-title{font-family:"Poppins", sans-serif;font-size:3rem;margin:10px 0}
+.hero-subtitle{font-size:1.05rem;color:var(--muted);max-width:520px}
+.badge{display:inline-flex;align-items:center;background:rgba(255,122,0,0.16);color:var(--primary);padding:6px 12px;border-radius:999px;font-weight:700;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase}
+.hero-actions{display:flex;gap:12px;margin:18px 0}
+.hero-stats{display:flex;gap:18px;flex-wrap:wrap}
+.stat{background:var(--surface);padding:12px 16px;border-radius:14px;box-shadow:0 10px 24px rgba(18,26,33,0.08)}
+.stat-label{margin:0 0 6px;color:var(--muted);font-size:0.85rem}
+.hero-media{position:relative}
+.hero-media img{border-radius:22px;box-shadow:0 20px 40px rgba(14,22,28,0.2);object-fit:cover;height:360px;width:100%}
+.hero-card{
+  position:absolute;bottom:-18px;left:-18px;background:var(--surface);padding:16px;border-radius:16px;box-shadow:0 16px 32px rgba(14,22,28,0.16);max-width:220px
+}
+.hero-card h3{margin:0 0 6px;font-size:1rem}
+.hero-card p{margin:0 0 12px;color:var(--muted);font-size:0.9rem}
 
-/* Gallery filter buttons */
-.gallery-filters{display:flex;gap:8px;align-items:center;margin:12px 0}
-.filter-btn{padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:#fff;color:var(--primary-dark);cursor:pointer}
-.filter-btn.active{box-shadow:0 8px 20px rgba(2,12,27,0.06)}
-.filter-btn[data-filter="yeshua"].active{background:linear-gradient(180deg, rgba(255,122,0,0.14), rgba(255,122,0,0.06));color:var(--accent-yeshua);border-color:rgba(255,122,0,0.18)}
-.filter-btn[data-filter="dom"].active{background:linear-gradient(180deg, rgba(46,139,87,0.12), rgba(46,139,87,0.04));color:var(--accent-dom);border-color:rgba(46,139,87,0.16)}
-.filter-btn[data-filter="pastoral"].active{background:linear-gradient(180deg, rgba(242,178,51,0.12), rgba(242,178,51,0.04));color:var(--primary-pastoral);border-color:rgba(242,178,51,0.16)}
-.calendar-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.calendar-card{padding:12px;border:1px solid #eee;border-radius:8px;background:#fafafa}
+/* Event info */
+.event-info h2{font-family:"Poppins", sans-serif;margin:0 0 18px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.info-card{background:var(--surface);border-radius:var(--radius);padding:18px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.info-icon{width:40px;height:40px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--secondary)}
+.info-icon svg{width:22px;height:22px}
+.info-card h3{margin:0 0 6px}
+.info-card p{margin:0;color:var(--muted)}
 
-/* Visual calendar: grid of event cards */
-.calendar-events-wrapper{margin-top:18px}
-.calendar-events-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-.event-card{padding:12px;border-radius:10px;background:#ffffff;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 18px rgba(10,20,30,0.04);position:relative;overflow:hidden;opacity:0;transform:translateY(14px);animation:fadeUp .45s ease forwards}
-.event-card{padding:12px;border-radius:10px;background:#ffffff;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 18px rgba(10,20,30,0.04);position:relative;overflow:hidden;opacity:0;transform:translateY(14px);animation:fadeUp .45s ease forwards;transition:transform .26s ease,box-shadow .26s ease;cursor:pointer}
-.event-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 18px 40px rgba(2,12,27,0.18);z-index:6}
-.event-card h4{margin:0 0 6px 0;font-size:1rem}
-.event-card p{margin:0;color:var(--muted);font-size:0.95rem}
-.event-badge{position:absolute;top:10px;right:10px;padding:6px 8px;border-radius:999px;font-weight:700;font-size:0.78rem}
+/* Groups */
+.section-title h2{font-family:"Poppins", sans-serif;margin:0 0 8px}
+.section-title p{margin:0;color:var(--muted)}
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.group-card{background:var(--surface);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow)}
+.group-card p{color:var(--muted)}
+.group-pill{display:inline-flex;padding:6px 12px;border-radius:999px;background:rgba(58,143,138,0.12);color:var(--secondary);font-weight:600;font-size:0.85rem}
+.group-card.highlight{background:linear-gradient(120deg, rgba(255,215,164,0.6), rgba(255,122,0,0.08))}
 
-/* color accents per group */
-.event-card.pastoral{border-left:6px solid var(--primary-pastoral);background:linear-gradient(180deg, rgba(11,42,64,0.02), #fff)}
-.event-card.yeshua{border-left:6px solid var(--accent-yeshua);background:linear-gradient(180deg, rgba(255,122,0,0.03), #fff)}
-.event-card.dom{border-left:6px solid var(--accent-dom);background:linear-gradient(180deg, rgba(46,139,87,0.03), #fff)}
-.event-card.pastoral .event-badge{background:rgba(11,42,64,0.08);color:var(--primary-dark)}
-.event-card.yeshua .event-badge{background:rgba(255,122,0,0.08);color:var(--accent-yeshua)}
-.event-card.dom .event-badge{background:rgba(46,139,87,0.08);color:var(--accent-dom)}
+/* About */
+.about-section{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px;align-items:center}
+.about-content{background:var(--surface);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow)}
+.about-content h2{font-family:"Poppins", sans-serif;margin:0 0 10px}
+.about-content p{margin:0;color:var(--muted)}
+.about-highlight{background:var(--soft);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow)}
+.about-highlight h3{margin:0 0 10px}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+/* Contact */
+.contact-section h2{font-family:"Poppins", sans-serif;margin:0 0 8px}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.contact-card{background:var(--surface);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow)}
+.contact-card h3{margin:0 0 6px}
+.contact-card p{margin:0 0 12px;color:var(--muted)}
+.contact-link{color:var(--secondary);font-weight:700}
 
-/* Side photo panels beside the calendar */
-.group-photos{display:flex;gap:12px;align-items:center;margin-top:12px}
-.group-photos img{width:48%;height:auto;display:block;object-fit:cover;border-radius:40%;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 18px rgba(10,20,30,0.04)}
+/* Registration modal */
+.registration-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1400;padding:20px}
+.registration-modal.show{display:flex;animation:fadeIn .22s ease}
+.registration-overlay{position:fixed;inset:0;background:rgba(12,16,20,0.5);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1300}
+.registration-overlay.show{opacity:1;pointer-events:auto}
+.registration-section{background:var(--surface);border-radius:24px;padding:28px;box-shadow:var(--shadow);width:min(780px, 96vw);position:relative;animation:slideUp .28s ease}
+.registration-close{position:absolute;top:14px;right:14px;border:none;background:rgba(28,37,43,0.08);width:36px;height:36px;border-radius:10px;cursor:pointer}
+.registration-header h2{font-family:"Poppins", sans-serif;margin:0 0 6px}
+.registration-header p{color:var(--muted);margin:0 0 18px}
+.registration-form{display:flex;flex-direction:column;gap:16px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:stretch}
+.registration-form label{display:flex;flex-direction:column;gap:6px;font-weight:600}
+.registration-form input{
+  padding:12px 14px;border-radius:12px;border:1px solid rgba(28,37,43,0.2);font:inherit;height:48px
+}
+.form-status{font-weight:600;color:var(--secondary)}
+.registration-summary{margin:16px 0 12px;padding:16px;border-radius:16px;background:linear-gradient(120deg, rgba(255,210,111,0.45), rgba(16,167,162,0.08))}
+.summary-tag{display:inline-block;text-transform:uppercase;letter-spacing:0.12em;font-size:0.7rem;font-weight:700;color:var(--secondary)}
+.registration-summary h3{margin:6px 0 6px;font-family:"Poppins", sans-serif}
+.registration-summary p{margin:0 0 10px;color:var(--muted)}
+.summary-meta{display:flex;gap:12px;flex-wrap:wrap;font-weight:700;color:var(--ink)}
+.summary-meta span{background:rgba(255,255,255,0.85);padding:6px 10px;border-radius:999px}
 
-/* photos inside cards to fill empty space */
-/* .card-photos removed: images under home cards were deleted to simplify layout */
+/* Footer */
+.site-footer{margin-top:32px;background:var(--surface);border-top:1px solid rgba(28,37,43,0.08)}
+.footer-content{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;padding:28px 20px}
+.footer-brand h3{margin:0 0 8px;font-family:"Poppins", sans-serif}
+.footer-brand p{margin:0;color:var(--muted)}
+.footer-links, .footer-contact{display:flex;flex-direction:column;gap:8px}
+.footer-links h4, .footer-contact h4{margin:0 0 6px}
+.footer-links a, .footer-contact a{color:var(--secondary);font-weight:700}
+.footer-contact span{color:var(--muted)}
+.footer-social{display:flex;gap:10px;margin-top:8px}
+.footer-social a{width:36px;height:36px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--secondary)}
+.footer-social svg{width:18px;height:18px}
+.footer-bottom{text-align:center;margin:0;padding:12px 20px 20px;color:var(--muted);font-size:0.9rem}
 
-@media (max-width:920px){
-  .group-photos{flex-direction:row;justify-content:center}
-  .group-photos img{width:42%;}
+/* WhatsApp floating button */
+.fab-whatsapp{position:fixed;right:18px;bottom:18px;z-index:1500;width:58px;height:58px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,12,27,0.22);background:#25D366;transition:transform .2s ease,box-shadow .2s ease}
+.fab-whatsapp:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(2,12,27,0.26)}
+.fab-whatsapp .fab-icon{width:58px;height:58px;border-radius:50%;display:block}
+
+/* Animations */
+.fade-in{animation:fadeInUp .6s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+@media (prefers-reduced-motion: reduce){
+  .registration-modal.show,
+  .registration-section,
+  .fade-in{animation:none}
 }
 
-.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:2000}
-.lightbox img{max-width:90%;max-height:80%;border-radius:6px}
-.lb-close{position:absolute;top:18px;right:18px;background:#fff;border-radius:50%;width:36px;height:36px;border:none;cursor:pointer}
-.site-footer{text-align:center;padding:16px;border-top:1px solid #eee;margin-top:24px;color:var(--muted)}
-/* Estilos específicos por grupo (para destaques) */
-.yeshua h2, .card.yeshua h3{color:var(--accent-yeshua)}
-.dom h2, .card.dom h3{color:var(--accent-dom)}
-
-/* Responsivo */
-@media (max-width:720px){
-  .calendar-grid{grid-template-columns:1fr}
-  /* slightly larger brand for tablets/smaller laptops */
-  .brand-symbol{width:64px;height:64px}
-  .group-symbol{width:56px;height:56px}
-  .main-nav .nav-link{min-width:95px}
-}
-/* Mobile-specific adjustments for better usability */
-@media (max-width:520px){
-  /* Stack nav links vertically for easier tapping */
-  .main-nav{flex-direction:column;align-items:stretch;gap:8px}
-  .main-nav .nav-link{width:100%;text-align:center;padding:10px 12px}
-
-  /* Gallery: smaller min column and reduced gaps to fit small screens */
-  .gallery{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-  .gallery-item img{height:180px}
-
-  /* Reduce badge size slightly on small screens */
-  .gallery-item .badge{font-size:0.85rem;left:10px;top:10px;padding:6px 8px}
-
-  /* Modal stretches more naturally on phones */
-  .modal-content{max-width:95%;width:96%;padding:14px}
-  .modal .btn{padding:9px 12px}
-
-  /* Event cards smaller spacing */
-  .event-card{padding:10px}
-
-  /* Brand and group symbols scaled down for phones */
-  .brand-symbol{width:56px;height:56px}
-  .group-symbol{width:48px;height:48px}
+@media (max-width:980px){
+  .hero-content{grid-template-columns:1fr}
+  .hero-media img{height:300px}
+  .about-section{grid-template-columns:1fr}
+  .site-nav{display:none}
+  .menu-toggle{display:inline-flex}
 }
 
-/* Page theme backgrounds (tints of group colors) */
-body.theme-home{background:linear-gradient(180deg, rgba(11,42,64,0.06), rgba(11,42,64,0.02));}
-/* stronger, warmer orange tint for the Yeshua page - increased RGBA for a richer orange */
-body.theme-yeshua{background:linear-gradient(180deg, rgba(231, 124, 23, 0.18), rgba(255,122,0,0.08));}
-/* Tom de fundo Yeshua levemente mais quente em RGB */
-body.theme-yeshua{background:linear-gradient(180deg, rgba(255,107,0,0.14), rgba(255,107,0,0.06));}
-
-/* subtle header tint on the Yeshua section to reinforce the orange theme */
-.section-header.yeshua{background:linear-gradient(90deg, rgba(255,122,0,0.06), rgba(255,122,0,0.02));padding:10px;border-radius:10px}
-body.theme-dom{background:linear-gradient(180deg, rgba(46,139,87,0.06), rgba(46,139,87,0.02));}
-
-/* Event modal styles */
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);z-index:3000}
-.modal[aria-hidden="false"]{display:flex}
-.modal-content{background:#fff;padding:20px;border-radius:14px;max-width:480px;width:94%;box-shadow:0 18px 50px rgba(2,12,27,0.45);position:relative;border:1px solid rgba(11,42,64,0.06)}
-.modal-close{position:absolute;top:12px;right:12px;border:none;background:#f7f7f8;border-radius:8px;width:36px;height:36px;cursor:pointer;box-shadow:0 4px 12px rgba(10,20,30,0.06)}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
-.modal-content h3{margin:0 0 6px 0;font-size:1.05rem;color:var(--primary-dark)}
-.modal-content p{margin:0;color:var(--muted);font-size:0.95rem}
-
-/* make the chart area cleaner */
-.rsvp-chart{background:linear-gradient(180deg, rgba(250,250,250,1), #fff);padding:10px;border-radius:10px;border:1px solid rgba(11,42,64,0.03)}
-.rsvp-chart .bar{display:flex;align-items:center;gap:12px;padding:6px 0}
-.rsvp-chart .label{width:56px;font-weight:700;color:var(--muted);font-size:0.95rem}
-.rsvp-chart .fill{height:14px;flex:1;background:rgba(0,0,0,0.04);border-radius:10px;position:relative;overflow:hidden;transition:width 420ms cubic-bezier(.2,.9,.2,1)}
-.rsvp-chart .fill::after{content:'';position:absolute;inset:0;display:block}
-.rsvp-chart .bar.yes .fill{background:linear-gradient(90deg, rgba(255,122,0,0.22), rgba(255,122,0,0.06))}
-.rsvp-chart .bar.no .fill{background:linear-gradient(90deg, rgba(46,139,87,0.18), rgba(46,139,87,0.04))}
-.rsvp-chart .count{width:42px;text-align:right;font-weight:700;color:var(--primary-dark);background:rgba(255,255,255,0.9);padding:6px 8px;border-radius:8px;box-shadow:0 6px 18px rgba(10,20,30,0.04)}
-
-/* nicer visual for active/primary buttons in modal */
-.modal .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,var(--primary-dark),#062634);box-shadow:0 8px 22px rgba(11,42,64,0.16);border:none}
-.modal .btn:hover{transform:translateY(-2px)}
-.modal .btn.alt{background:#fff;color:var(--primary-dark);border:1px solid rgba(11,42,64,0.08);box-shadow:0 6px 18px rgba(10,20,30,0.04)}
-.modal .btn.alt:hover{background:#fafafa}
-
-/* small responsive tweak */
-@media (max-width:520px){
-  .modal-content{padding:14px}
-  .rsvp-chart .label{width:48px;font-size:0.88rem}
-  .rsvp-chart .count{display:inline-block;padding:5px 8px}
-  .modal .btn{padding:9px 12px}
+@media (max-width:640px){
+  .site-header{flex-direction:column;align-items:flex-start}
+  .header-actions{width:100%;justify-content:space-between}
+  .hero{padding:24px}
+  .hero-title{font-size:2.4rem}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .btn{width:100%}
+  .registration-section{padding:22px}
+  .footer-content{grid-template-columns:1fr;gap:16px}
+  .fab-whatsapp{right:14px;bottom:14px;width:52px;height:52px}
+  .fab-whatsapp .fab-icon{width:52px;height:52px}
 }
-
-/* RSVP mini-graph inside modal */
-.rsvp-chart{display:flex;flex-direction:column;gap:8px;margin-top:12px;margin-bottom:6px}
-.rsvp-chart .bar{display:flex;align-items:center;gap:10px}
-.rsvp-chart .label{width:56px;font-weight:700;color:var(--muted)}
-.rsvp-chart .fill{height:14px;flex:1;background:linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));border-radius:8px;position:relative;overflow:hidden}
-.rsvp-chart .fill::after{content:'';position:absolute;inset:0;background:transparent}
-.rsvp-chart .bar.yes .fill{background:linear-gradient(90deg, rgba(255,122,0,0.18), rgba(255,122,0,0.06))}
-.rsvp-chart .bar.no .fill{background:linear-gradient(90deg, rgba(46,139,87,0.18), rgba(46,139,87,0.04))}
-.rsvp-chart .count{width:36px;text-align:right;font-weight:700;color:var(--primary-dark)}
-
-/* alternative button style */
-.btn.alt{background:#fff;color:var(--primary-dark);border:1px solid #ddd}
-
-/* ===========================
-   Mobile improvements (touch, spacing, readability)
-   =========================== */
-/* Mobile-first overrides to make the UI friendlier on phones */
-@media (max-width:520px){
-  /* Header layout: stack brand + nav for easier scanning and larger tap targets */
-  .site-header{flex-direction:column;align-items:stretch;gap:12px;padding:14px}
-  .brand{align-items:center;width:100%;justify-content:flex-start;gap:12px}
-  .brand > div{flex:1}
-
-  /* Nav becomes a horizontal scroll on very small widths for quick access, but keep full-width buttons for accessibility */
-  .main-nav{display:flex;flex-direction:row;gap:8px;overflow-x:auto;padding-bottom:4px}
-  .main-nav::-webkit-scrollbar{display:none}
-  .main-nav .nav-link{min-width:110px;white-space:nowrap;padding:12px 14px;border-radius:12px;font-size:1rem}
-
-  /* Make primary buttons larger and full-width for easy tapping */
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 14px;border-radius:12px;font-size:1rem}
-  .card .btn{width:100%}
-
-  /* Cards stack into a single column for readability */
-  .cards{grid-template-columns:1fr;gap:14px}
-
-  /* Slightly larger typography for small screens */
-  html{font-size:15px}
-  .site-header h1{font-size:1.15rem}
-  .tagline{font-size:0.95rem}
-
-  /* Images: use fluid heights and keep aspect, reduce heavy shadows for better performance */
-  .card img, .gallery-item img{height:auto;max-height:320px;object-fit:cover}
-
-  /* Badges and small text tweaks */
-  .gallery-item .badge{font-size:0.9rem;padding:7px 9px}
-
-  /* Modal and lightbox should fit the viewport nicely */
-  .lightbox img{max-width:98%;max-height:84%}
-  .modal-content{max-width:96%;width:96%;padding:12px}
-
-  /* Improved focus outlines for keyboard and accessibility */
-  .nav-link:focus-visible, .btn:focus-visible, .filter-btn:focus-visible{outline:3px solid rgba(18,114,170,0.18);outline-offset:3px;border-radius:10px}
-
-  /* Reduce visual noise on mobiles (lighter shadows) */
-  .event-card, .card{box-shadow:0 8px 20px rgba(2,12,27,0.06)}
-
-  /* Footer spacing */
-  .site-footer{padding:18px;font-size:0.95rem}
-}
-
-/* Small polish for medium phones/tablets to avoid cramped layouts */
-@media (max-width:720px){
-  .brand-symbol{width:56px;height:56px}
-  .group-symbol{width:56px;height:56px}
-  .main-nav .nav-link{min-width:95px}
-}
-
-/* ------------------
-   Sidebar (lateral) styles
-   ------------------ */
-.sidebar-toggle{display:none;background:transparent;border:2px solid transparent;padding:8px 10px;border-radius:10px;font-size:1.25rem;cursor:pointer;color:var(--primary-dark)}
-.sidebar-toggle:focus{outline:3px solid rgba(18,114,170,0.12);outline-offset:3px}
-
-.side-bar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-width);max-width:82%;background:var(--primary-dark);color:#ffffff;box-shadow:2px 0 22px rgba(2,12,27,0.12);z-index:2200;padding:18px 12px;transform:translateX(-108%);transition:transform .28s ease;display:flex;flex-direction:column;gap:12px}
-.side-bar[aria-hidden="false"]{transform:translateX(0)}
-.sidebar-close{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;border-radius:8px;padding:6px 8px;cursor:pointer}
-.side-nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.side-nav .nav-link{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;border:none;background:transparent;text-align:left;color:var(--bg);font-weight:700}
-.side-nav .nav-link.active{background:rgba(255,255,255,0.06);border-radius:10px}
-
-/* Overlay to dim page when sidebar is open */
-.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.36);z-index:2100;display:none}
-.sidebar-overlay[aria-hidden="false"]{display:block}
-
-/* On small screens, prefer the sidebar and hide the top nav to optimize vertical space */
-@media (max-width:520px){
-  /* keep earlier behavior for very small screens (sidebar visible) */
-  .main-nav{display:none !important}
-  .sidebar-toggle{display:inline-flex}
-  /* Ensure .side-bar sits above content and doesn't push layout */
-  .side-bar{width:280px}
-  main{filter:none}
-}
-
-/* On slightly larger small screens, keep both but reduce sidebar width */
-@media (min-width:521px) and (max-width:920px){
-  .sidebar-toggle{display:inline-flex}
-  .side-bar{width:220px}
-}
-
-/* Make sidebar visible (persistent) on notebooks and larger phones/tablets */
-/* keep sidebar collapsed by default on all sizes; toggle will open it */
-.sidebar-toggle{display:inline-flex}
-
-/* when the sidebar is explicitly opened, shift the page content to the right */
-body.sidebar-open main,
-body.sidebar-open .site-header,
-body.sidebar-open .site-footer{
-  margin-left:var(--sidebar-width);
-  transition:margin-left .28s ease;
-}
-
-/* color polish for links and small elements inside sidebar */
-.side-bar a, .side-bar button, .side-bar .badge{color:rgba(255,255,255,0.95)}
-
-/* Hide top navigation entirely — use only the lateral bar for navigation */
-.main-nav{display:none !important}
-
-/* ======================
-   Floating Instagram FAB
-   ====================== */
-.fab-instagram{position:fixed;right:18px;bottom:18px;z-index:3250;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.fab-toggle{width:56px;height:56px;border-radius:999px;background:linear-gradient(45deg,#E1306C,#C13584);color:#fff;border:none;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,12,27,0.18);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
-.fab-toggle:active{transform:scale(.98)}
-.fab-menu{display:none;flex-direction:column;gap:8px;margin-bottom:6px;background:transparent}
-.fab-menu.show{display:flex}
-.fab-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:#fff;color:var(--primary-dark);text-decoration:none;box-shadow:0 10px 28px rgba(2,12,27,0.08);font-weight:700}
-.fab-item svg{width:20px;height:20px;flex-shrink:0}
-@media (max-width:520px){
-  .fab-instagram{right:14px;bottom:14px}
-  .fab-toggle{width:52px;height:52px}
-  .fab-item{padding:8px 10px;font-size:0.95rem}
-}
-
-/* Make FAB minimal: show only the provided icon file inside a circular button */
-.fab-toggle{background:transparent;box-shadow:none;padding:0}
-.fab-toggle .fab-icon{width:44px;height:44px;display:block;object-fit:cover;border-radius:999px}
-.fab-toggle:focus-visible{outline:3px solid rgba(18,114,170,0.18);outline-offset:4px;border-radius:999px}
-
-/* Nudge the SVG slightly left and up and make it a bit larger for better visual match */
-.fab-toggle .fab-icon{transform:translate(-6px,-4px) scale(1.06);width:48px;height:48px}
-.fab-toggle svg.fab-icon { display:block }
 
 
