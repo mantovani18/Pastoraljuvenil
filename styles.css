@@ -490,7 +490,9 @@ main{width:100%;max-width:1160px;margin:0 auto;padding:28px 20px 96px;display:fl
   .groups-grid,
   .contact-grid,
   .gallery-grid{grid-template-columns:1fr}
-  .registration-section{padding:22px}
+  .registration-modal{align-items:flex-start;padding:10px}
+  .registration-section{width:100%;max-width:100%;max-height:calc(100dvh - 20px);overflow-y:auto;padding:18px 14px 16px;border-radius:18px}
+  .registration-close{position:sticky;top:0;left:100%;z-index:5}
   .mobile-menu{width:min(84vw, 300px)}
 }
 
