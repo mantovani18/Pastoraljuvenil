@@ -1,11 +1,11 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQA5-kIyDfIr2981yaxAA-GSPuRFODF-Kkq-XhD6zFEeMG2KXTMACCeQxlkbmuXPGTVA/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxshT96FFqhSi8U6MnblqYGIlBHfEQHHYiGvg4UxuVqsp0VfsR-Sq4pLgAUO2z3wfvDaQ/exec';
 
 const EVENT_CONFIG = {
   name: 'Amoriza',
-  description: 'Um encontro jovem para viver a fe, a amizade e a missao com alegria.',
-  image: 'evento-amoriza.jpg',
-  date: 'Em breve',
-  location: 'Paroquia Sao Jose'
+  description: 'O AMOR FLORESCEU EM MIM - DESPERTAR',
+  image: 'imgEvento/Amoriza.jpeg',
+  date: '01/02/03 de Maio de 2026',
+  location: 'Paroquia São José'
 };
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -95,6 +95,7 @@ function setupForm(){
       nome: String(data.get('nome') || '').trim(),
       idade: String(data.get('idade') || '').trim(),
       contato: String(data.get('contato') || '').trim(),
+      numero: String(data.get('contato') || '').trim(),
       alergia: String(data.get('alergia') || '').trim() || 'Nao informado'
     };
 
@@ -103,27 +104,82 @@ function setupForm(){
       return;
     }
 
-    if(!GOOGLE_SCRIPT_URL){
+    const scriptUrl = GOOGLE_SCRIPT_URL.trim();
+    if(!scriptUrl){
       if(status) status.textContent = 'Inscricao pronta. Configure a URL do Google Sheets no script.js.';
       return;
     }
 
     if(status) status.textContent = 'Enviando inscricao...';
     try{
-      const resp = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify(payload)
-      });
-      if(!resp.ok) throw new Error('Erro no envio');
-      if(status) status.textContent = 'Inscricao enviada com sucesso.';
+      const result = await sendRegistration(scriptUrl, payload);
+      if(status) status.textContent = result.message;
       form.reset();
       const inputEl = document.getElementById('event-name-input');
       if(inputEl) inputEl.value = EVENT_CONFIG.name;
     } catch (err){
-      if(status) status.textContent = 'Nao foi possivel enviar agora. Tente novamente.';
+      if(status) status.textContent = err.message || 'Nao foi possivel enviar agora. Tente novamente.';
     }
   });
+}
+
+async function sendRegistration(scriptUrl, payload){
+  const body = JSON.stringify(payload);
+
+  try {
+    const response = await fetch(scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body
+    });
+
+    if(!response.ok) {
+      throw new Error(`Falha HTTP ${response.status}`);
+    }
+
+    const contentType = response.headers.get('content-type') || '';
+    const rawText = await response.text();
+    let data = null;
+    try {
+      data = rawText ? JSON.parse(rawText) : null;
+    } catch (_parseError) {
+      data = null;
+    }
+
+    if(data && data.ok === false){
+      throw new Error(data.error || 'O script retornou erro no processamento.');
+    }
+
+    if(!data && contentType.includes('text/html')){
+      if(rawText.includes('Função de script não encontrada: doPost') || rawText.includes('Funcao de script nao encontrada: doPost')){
+        throw new Error('A URL existe, mas o Apps Script nao tem a funcao doPost publicada.');
+      }
+      if(rawText.includes('<title>Erro</title>')){
+        throw new Error('O Apps Script retornou uma pagina de erro em vez de confirmar a inscricao.');
+      }
+    }
+
+    return { message: 'Inscricao enviada com sucesso.' };
+  } catch (firstError) {
+    if(String(firstError.message || '').toLowerCase().includes('dopost')){
+      throw firstError;
+    }
+
+    try {
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body
+      });
+
+      return {
+        message: 'Inscricao enviada. Se nao aparecer na planilha em 1 minuto, confira a implantacao do Apps Script.'
+      };
+    } catch (_fallbackError) {
+      throw new Error(`Nao foi possivel enviar a inscricao (${firstError.message}).`);
+    }
+  }
 }
 
 function setupRegistrationModal(){
